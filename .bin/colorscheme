@@ -1,0 +1,23 @@
+#!/bin/bash
+
+
+color=$(echo -en "White|Black|Green|Pink|Yellow" | rofi -sep "|" -dmenu -i -p 'Colorscheme' -dpi 92 ) # Make selection prompt
+		
+if [ $color = "White" ]; then
+	nitrogen --set-scaled --random ~/Pictures/Wallpapers/White/
+
+elif [ $color = "Black" ]; then
+	nitrogen --set-scaled --random ~/Pictures/Wallpapers/Black/
+
+elif [ $color = "Green" ]; then
+	nitrogen --set-scaled --random ~/Pictures/Wallpapers/Green/
+
+elif [ $color = "Pink" ]; then
+	nitrogen --set-scaled --random ~/Pictures/Wallpapers/Pink/
+
+elif [ $color = "Yellow" ]; then
+	nitrogen --set-scaled --random ~/Pictures/Wallpapers/Yellow
+
+fi
+
+
