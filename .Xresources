@@ -1,0 +1,14 @@
+Xft.dpi: 96
+Xft.autohint: 0
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintfull
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
+*renderFont: true
+*faceName: FiraCode Nerd Font
+*faceSize: 12
+
+Sxiv.background: rgb:00/00/00
+Sxiv.foreground: rgb:77/aa/77
+Sxiv.font: xos4 Roboto:style=Bold:size=10
