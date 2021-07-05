@@ -1,28 +1,48 @@
-#
-# wm independent hotkeys
-#
 
-# terminal emulator
+# TERMINAL
 super + Return
 	alacritty
 
-# program launcher
-super + @space
-	dmenu_run
+# ROFI
+super + space
+	rofi -show drun
 
-# make sxhkd reload its configuration files:
+super + Tab
+	rofi -show window 
+
+# SCREENSHOT
+super + Print
+	~/.bin/screenshot
+
+super + shift + Print
+	~/.bin/selectscreenshot
+
+# CHANGE WALLPAPER
+super + g
+	~/.bin/colorscheme
+
+# RELOAD SXHKD
 super + Escape
 	pkill -USR1 -x sxhkd
 
-#
-# bspwm hotkeys
-#
+# VOLUME UP
 
-# quit/restart bspwm
+super + F1
+	~/.bin/volume.sh mute
+
+super + F2
+	~/.bin/volume.sh down
+
+super + F3
+	~/.bin/volume.sh up
+
+	
+
+# QUIT/RESTART BSPWM
 super + alt + {q,r}
 	bspc {quit,wm -r}
 
-# close and kill
+# CLOSE/KILL WINDOW
 super + {_,shift + }w
 	bspc node -{c,k}
 
@@ -35,12 +55,13 @@ super + y
 	bspc node newest.marked.local -n newest.!automatic.local
 
 # swap the current node and the biggest window
-super + g
-	bspc node -s biggest.window
+#super + g
+#	bspc node -s biggest.window
 
-#
-# state/flags
-#
+
+#############################
+# STATE/FLAGS
+#############################
 
 # set the window state
 super + {t,s,f}
@@ -50,11 +71,11 @@ super + {t,s,f}
 super + ctrl + {m,x,y,z}
 	bspc node -g {marked,locked,sticky,private}
 
-#
-# focus/swap
-#
+##############################
+# FOCUS/SWAP
+##############################
 
-# focus the node in the given direction
+# FOCUS/SWAP WINDOWS
 super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
@@ -71,7 +92,7 @@ super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
 # focus the last node/desktop
-super + {grave,Tab}
+super + grave
 	bspc {node,desktop} -f last
 
 # focus the older or newer node in the focus history
@@ -84,7 +105,10 @@ super + {o,i}
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
 
-#
+# Rotat pane
+super + shift + r
+    bspc node @parent -R 90
+
 # preselect
 #
 
@@ -104,9 +128,7 @@ super + ctrl + space
 super + ctrl + shift + space
 	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
-#
 # move/resize
-#
 
 # expand a window by moving one of its side outward
 super + alt + {h,j,k,l}
