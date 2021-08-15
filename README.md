@@ -33,6 +33,14 @@ Linux Dotfiles for my system
 * alacritty
 * neovim(nightly)
 
+## TO-DO
+
+* add xmonad rice
+* add install script
+* complete the colortheme switcher script
+
+
+
 ## Credits
 Thanks [TheRealKizu](https://github.com/TheRealKizu/dotfiles) ( polybar scripts and ncmcpp and for such a good source for learning)
 
