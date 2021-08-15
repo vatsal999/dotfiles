@@ -23,7 +23,7 @@ scrolling:
 
 font:
   normal:
-      family: JetBrains Mono Nerd Font
+      family: FiraCode Nerd Font
       style: Regular
 
   bold:
@@ -31,18 +31,17 @@ font:
       style: Bold
 
   italic:
-      family: Iosevka Nerd Font
+      family: FiraCode Nerd Font
       style: Italic
 
   size: 12.0
 
-background_opacity: 0.8
+background_opacity: 1.0
 
 colors:
   primary:
-    #background: '#1d1f21'
-    background: '#161616'
-    foreground: '#eeffff'
+    background: '#1d1f21'
+    foreground: '#cfcfcf'
 
   cursor:
     text: CellBackground

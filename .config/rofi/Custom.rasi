@@ -13,13 +13,15 @@
 
 
   background-color: #1d1f21;
-  font: "Iosevka Nerd Font 12";
+  font: "Rubik 12";
   text-color: @text;
 }
 
 window {
+  transparency: "real";
+  background-color: @transparent;
   fullscreen: false;
-  width: 40%;
+  width: 35%;
   height: 65%;
 }
 

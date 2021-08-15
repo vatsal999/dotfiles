@@ -4,7 +4,8 @@ import System.IO (hPutStrLn)
 import System.Exit (exitSuccess)
 import qualified XMonad.StackSet as W
 
-import XMonad.Actions.CopyWindow (kill1)
+--import XMonad.Actions.CopyWindow (kill1)
+import XMonad.Actions.CopyWindow
 import XMonad.Actions.CycleWS (Direction1D(..), moveTo, shiftTo, WSType(..), nextScreen, prevScreen)
 import XMonad.Actions.MouseResize
 import XMonad.Actions.Promote
@@ -28,19 +29,20 @@ import XMonad.Hooks.ServerMode
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.WorkspaceHistory
 
-import XMonad.Layout.Accordion
 import XMonad.Layout.GridVariants (Grid(Grid))
 import XMonad.Layout.SimplestFloat
-import XMonad.Layout.Spiral
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Tabbed
+--use threecolmid layout for widescreen
 import XMonad.Layout.ThreeColumns
 
 import XMonad.Layout.LayoutModifier hiding (hook)
 import XMonad.Layout.LimitWindows (limitWindows, increaseLimit, decreaseLimit)
 import XMonad.Layout.Magnifier
-import XMonad.Layout.MultiToggle (mkToggle, single, EOT(EOT), (??))
-import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL, MIRROR, NOBORDERS))
+--import XMonad.Layout.MultiToggle (mkToggle, single, EOT(EOT), (??))
+import XMonad.Layout.MultiToggle
+--import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL, MIRROR, NOBORDERS))
+import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Renamed
 import XMonad.Layout.ShowWName
@@ -61,14 +63,14 @@ import XMonad.Util.SpawnOnce
 myModMask = mod4Mask
 
 myTerminal = "alacritty"
-myFont = "xft:FiraCode Nerd Font:regular:size=11:antialias=true:hinting=true"
+myFont = "xft:JetBrains Mono Nerd Font:regular:size=11:antialias=true:hinting=true"
 myBorderWidth = 3
 myNorBorderColor = "#1d1f21"
 myFocBorderColor = "#808080"
 
 
-sidebarlaunch = spawn "exec ~/.bin/eww open-many weather_side time_side smol_calendar player_side sys_side sliders_side"
-ewwclose = spawn "exec ~/.bin/eww close-all"
+sidebarlaunch = spawn "exec ~/bin/eww open-many weather_side time_side smol_calendar player_side sys_side sliders_side"
+ewwclose = spawn "exec ~/bin/eww close-all"
 
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
@@ -80,11 +82,14 @@ myStartupHook :: X ()
 myStartupHook = do
   setWMName "LG3D"
   spawnOnce "xsetroot -cursor_name left_ptr"
-  spawnOnce "nitrogen --restore &"
-  spawnOnce "exec ~/.config/polybar/launch.sh"
+  spawnOnce "exec ~/bin/pulse-volume-watcher.py | xob &"
+  spawn "nitrogen --random /home/vatsal/Pictures/Wallpapers/Black --set-scaled &"
+  spawn "exec ~/bin/eww daemon"
+  spawn "exec ~/.config/polybar/launch.sh"
   spawnOnce "dunst"
-  spawnOnce "exec ~/.bin/eww daemon"
   spawnOnce "picom --experimental-backends &"
+  spawnOnce "optimus-manager-qt &"
+  spawnOnce "nm-applet &"
 
 ----------------------
 --SCRATCHPADS
@@ -94,6 +99,7 @@ myScratchPads :: [NamedScratchpad]
 myScratchPads = [ NS "terminal" spawnTerminal isTerminal centerFloat
                 , NS "discord" spawnDiscord isDiscord centerFloat
                 , NS "spotify" spawnSpotify isSpotify centerFloat
+                , NS "music" spawnMusic isMusic centerFloat
               ] where
                   spawnTerminal = myTerminal ++ " -t scratchpad"
                   isTerminal = title =? "scratchpad"
@@ -109,6 +115,9 @@ myScratchPads = [ NS "terminal" spawnTerminal isTerminal centerFloat
 
                   spawnSpotify = "spotify"
                   isSpotify = className =? "Spotify"
+
+                  spawnMusic = myTerminal ++ " -t ncmpcpp" ++ " -e ncmpcpp"
+                  isMusic = title =? "ncmpcpp"
 
 --Makes setting the spacingRaw simpler to write. The spacingRaw module adds a configurable amount of space around windows.
 mySpacing :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
@@ -133,15 +142,6 @@ tall     = renamed [Replace "tall"]
            $ limitWindows 12
            $ mySpacing 8
            $ ResizableTall 1 (3/100) (1/2) []
-magnify  = renamed [Replace "magnify"]
-           $ smartBorders
-           $ windowNavigation
-           $ addTabs shrinkText myTabTheme
-           $ subLayout [] (smartBorders Simplest)
-           $ magnifier
-           $ limitWindows 12
-           $ mySpacing 8
-           $ ResizableTall 1 (3/100) (1/2) []
 monocle  = renamed [Replace "monocle"]
            $ smartBorders
            $ windowNavigation
@@ -160,19 +160,13 @@ grid     = renamed [Replace "grid"]
            $ mySpacing 8
            $ mkToggle (single MIRROR)
            $ Grid (16/10)
-spirals  = renamed [Replace "spirals"]
-           $ smartBorders
-           $ windowNavigation
-           $ addTabs shrinkText myTabTheme
-           $ subLayout [] (smartBorders Simplest)
-           $ mySpacing' 8
-           $ spiral (6/7)
 threeCol = renamed [Replace "threeCol"]
            $ smartBorders
            $ windowNavigation
            $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
            $ limitWindows 7
+           $ mySpacing 8
            $ ThreeCol 1 (3/100) (1/2)
 threeRow = renamed [Replace "threeRow"]
            $ smartBorders
@@ -188,17 +182,12 @@ tabs     = renamed [Replace "tabs"]
            -- I cannot add spacing to this layout because it will
            -- add spacing between window and tabs which looks bad.
            $ tabbed shrinkText myTabTheme
-tallAccordion  = renamed [Replace "tallAccordion"]
-           $ Accordion
-wideAccordion  = renamed [Replace "wideAccordion"]
-           $ Mirror Accordion
-
 -- setting colors for tabs layout and tabs sublayout.
 myTabTheme = def { fontName            = myFont
                  , activeColor         = "#808080"
                  , inactiveColor       = "#1d1f21"
                  , activeBorderColor   = "#808080"
-                 , inactiveBorderColor = "#1d1f21"
+                 , inactiveBorderColor = "#808080"
                  , activeTextColor     = "#282c34"
                  , inactiveTextColor   = "#d0d0d0"
                  }
@@ -209,16 +198,13 @@ myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts float
                $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
              where
                myDefaultLayout =     withBorder myBorderWidth tall
-                                 ||| magnify
                                  ||| noBorders monocle
+                                 ||| Mirror (Tall 1 (3/100) (3/5) )
+                                 ||| threeCol
                                  ||| floats
                                  ||| noBorders tabs
                                  ||| grid
-                                 ||| spirals
-                                 ||| threeCol
                                  ||| threeRow
-                                 ||| tallAccordion
-                                 ||| wideAccordion
 
 myWorkspaces = [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
 myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y -> (x,y)
@@ -251,18 +237,26 @@ myManageHook = composeAll
 
 myKeys :: [(String, X ())]
 myKeys =
+        [("M-" ++ m ++ k, windows $ f i)
+            | (i, k) <- zip (myWorkspaces) (map show [1 :: Int ..])
+            , (f, m) <- [(W.view, ""), (W.shift, "S-"), (copy, "S-C-")]]
+        ++
     -- Xmonad
         [ ("M-C-r", spawn "xmonad --recompile")  -- Recompiles xmonad
-        , ("M-S-r", spawn "xmonad --restart")    -- Restarts xmonad
+        , ("M-S-r", spawn "xmonad --recompile && xmonad --restart")    -- Recompile and Restart xmonad
         , ("M-S-q", io exitSuccess)              -- Quits xmonad
 
     -- Run Prompt
-        , ("M-S-<Return>", spawn "rofi  -show drun -modi run,drun,window -theme $HOME/.config/rofi/Quiet.rasi -drun-icon-theme \"Papirus-Dark\" " )
+        , ("M-S-<Return>", spawn "rofi  -show drun -modi run,drun,window  -drun-icon-theme \"Papirus-Dark\" " )
+        , ("M1-<Space>", spawn "rofi -show window -modi run,drun,window  -window-icon-theme \"Papirus-Dark\" ")
         , ("M-<Return>", spawn (myTerminal))
         
     -- Kill windows
         , ("M-S-c", kill1)     -- Kill the currently focused client
         , ("M-S-a", killAll)   -- Kill all windows on current workspace
+    --Copy windows
+        , ("S-C-a", windows copyToAll)
+        , ("S-C-z", killAllOtherCopies)
 
     -- Workspaces
         , ("M-.", nextScreen)  -- Switch focus to next monitor
@@ -324,21 +318,24 @@ myKeys =
     -- Toggle show/hide these programs.  They run on a hidden workspace.
     -- When you toggle them to show, it brings them to your current workspace.
     -- Toggle them to hide and it sends them back to hidden workspace (NSP).
-        , ("C-s t", namedScratchpadAction myScratchPads "terminal")
-        , ("C-s c", namedScratchpadAction myScratchPads "discord")
-        , ("C-s m", namedScratchpadAction myScratchPads "spotify")
+        , ("M1-t", namedScratchpadAction myScratchPads "terminal")
+        , ("M1-c", namedScratchpadAction myScratchPads "discord")
+        , ("M1-m", namedScratchpadAction myScratchPads "music")
 
 
     --Scripts
         , ("M-w", sidebarlaunch)
         , ("M-S-w", ewwclose)
+        , ("M-<Esc>", spawn "~/bin/lock.sh")
     --screenshot
-        , ("<Print>", spawn "~/.bin/screenshot")
-        , ("S-<Print>", spawn "~/.bin/selectscreenshot")
+        , ("<Print>", spawn "~/bin/screenshot")
+        , ("S-<Print>", spawn "~/bin/selectscreenshot")
     --volume
-        , ("<F1>", spawn "~/.bin/volume mute")
-        , ("<XF86AudioLowerVolume>", spawn "~/.bin/volume down")
-        , ("F3>", spawn "~/.bin/volume up")
+        , ("<XF86AudioMute>", spawn "pamixer -t")
+        , ("<XF86AudioLowerVolume>", spawn "pamixer --decrease 1")
+        , ("<XF86AudioRaiseVolume>", spawn "pamixer --increase 1")
+	    , ("<XF86MonBrightnessUp>", spawn "brightnessctl s +1%")
+	    , ("<XF86MonBrightnessDown>", spawn "brightnessctl s 1%-")
         ]
     -- The following lines are needed for named scratchpads.
           where nonNSP          = WSIs (return (\ws -> W.tag ws /= "NSP"))

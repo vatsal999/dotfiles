@@ -1,0 +1,4 @@
+#!/bin/sh
+
+maim ~/Pictures/Screenshots/$(date +%d:%H:%M:%S).png
+notify-send "Screenshot saved" -a Screenshot -i /usr/share/icons/Papirus-Dark/64x64/devices/camera.svg

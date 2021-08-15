@@ -10,33 +10,45 @@ super + space
 super + Tab
 	rofi -show window 
 
+#Lock option
+super + shift + Escape
+    ~/bin/lock.sh
+
+super + shift + grave
+    ~/bin/rofi-power
+
 # SCREENSHOT
 super + Print
-	~/.bin/screenshot
+	~/bin/screenshot
 
 super + shift + Print
-	~/.bin/selectscreenshot
+	~/bin/selectscreenshot
 
 # CHANGE WALLPAPER
 super + g
-	~/.bin/colorscheme
+	~/bin/colorscheme
 
 # RELOAD SXHKD
 super + Escape
 	pkill -USR1 -x sxhkd
 
 # VOLUME UP
-
 super + F1
-	~/.bin/volume.sh mute
+	pamixer -t
 
 super + F2
-	~/.bin/volume.sh down
+	pamixer --decrease 1
 
 super + F3
-	~/.bin/volume.sh up
+	pamixer --increase 1
 
-	
+#BRIGHTNESS
+super + F7
+    brightnessctl s 1%-
+
+super + F8
+    brightnessctl s +1%
+
 
 # QUIT/RESTART BSPWM
 super + alt + {q,r}
@@ -105,7 +117,7 @@ super + {o,i}
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
 
-# Rotat pane
+# Rotate pane
 super + shift + r
     bspc node @parent -R 90
 

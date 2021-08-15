@@ -1,4 +1,0 @@
-#!/bin/sh
-
-maim -s -u -l -c 0.3,0,0.5,0.3 ~/Pictures/Screenshots/$(date +%H-%M-%S).png
-notify-send "Screenshot saved " -i /usr/share/icons/HighContrast/scalable/devices/camera-photo.svg

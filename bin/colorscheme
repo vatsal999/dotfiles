@@ -1,0 +1,42 @@
+#!/bin/sh
+
+#NOT COMPLETE DONT USE 
+
+color=$(echo -en "Light|Monochrome|GruvBox|Faded" | rofi -sep "|" -dmenu -i -p 'Colorscheme' -dpi 92 ) # Make selection prompt
+		
+if [ $color = "Light" ]; then
+	nitrogen --set-scaled --random ~/Pictures/Wallpapers/White/
+
+elif [ $color = "Dark" ]; then
+    #gtk
+    sed -i "s/gtk-theme-name=.*/gtk-theme-name=Orchis-grey-dark-compact/" ~/.config/gtk-3.0/settings.ini
+    sed -i "s/gtk-icon-theme-name=.*/gtk-icon-theme-name=Vimix Black Dark/" ~/.config/gtk-3.0/settings.ini
+    #bspwm
+    bspc config focused_border_color "#808080"
+    #wall
+	nitrogen --set-scaled --random ~/Pictures/Wallpapers/Black/
+
+elif [ $color = "GruvBox" ]; then
+    #gtk
+    sed -i "s/gtk-theme-name=.*/gtk-theme-name=elkowars_phocus/" ~/.config/gtk-3.0/settings.ini
+    #wall
+    nitrogen --set-scaled ~/Pictures/Wallpapers/fadedhill.png
+    
+elif [ $color = "Faded" ]; then
+    #wall
+	nitrogen --set-scaled --random ~/Pictures/Wallpapers/Faded/
+    #gtk
+    sed -i "s/gtk-theme-name=.*/gtk-theme-name=/" ~/.config/gtk-3.0/settings.ini
+    sed -i "s/gtk-icon-theme-name=.*/gtk-icon-theme-name=Vimix/" ~/.config/gtk-3.0/settings.ini
+    #nvim
+    #bspwm
+    bspc config focused_border_color "#808080"
+    #dunst
+    sed -i "s/frame_color = .*/frame_color = #b19cd9/" ~/.config/dunst/dunstrc
+
+fi
+
+notify-send "$color" "Theme changed to $color"
+
+
+

@@ -1,4 +1,5 @@
 #!/bin/sh
+pamixer -m
 i3lock --nofork                 	\
     --ignore-empty-password		\
     \
@@ -36,6 +37,6 @@ i3lock --nofork                 	\
     --wrong-size=50			\
     --wrong-text="Try again"		\
     --wrong-color=ffffff\
-    --image=/home/thisguy/Pictures/Wallpapers/Black/hell.png \
+    --image=/home/vatsal/Pictures/Wallpapers/Black/hell.png \
     --fill
 

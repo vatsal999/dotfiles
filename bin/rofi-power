@@ -6,7 +6,7 @@ wm=$(wmctrl -m | grep Name | cut -d: -f2)
 
 if [ $res = "Reload" ]; then 
 
-    dunstify 'Reloading config' -a Notification -i /usr/share/icons/Papirus-Dark/16x16/actions/reload.svg 
+    dunstify 'Reloading config' -a Notification -i /usr/share/icons/Papirus-Dark/64x64/actions/reload.svg 
     sleep 1 
 
     if [ $wm = "bspwm" ]; then
@@ -15,25 +15,25 @@ if [ $res = "Reload" ]; then
 
 elif [ $res = "Lock" ]; then 
 
-    dunstify 'Locking screen' -a Notification -i /usr/share/icons/Papirus-Dark/16x16/apps/system-lock-screen.svg 
+    dunstify 'Locking screen' -a Notification -i /usr/share/icons/Papirus-Dark/64x64/apps/system-lock-screen.svg 
     sleep 1 
-    ~/.bin/lock 
+    ~/bin/lock.sh
 
 elif [ $res = "Logout" ]; then 
 
-    dunstify 'Logging out' -a Notification -i /usr/share/icons/Papirus-Dark/16x16/apps/system-log-out.svg 
+    dunstify 'Logging out' -a Notification -i /usr/share/icons/Papirus-Dark/64x64/apps/system-log-out.svg 
     sleep 1  
     killall Xorg 
 
 elif [ $res = "Shutdown" ]; then 
 
-    dunstify 'Shutting down' -a Notification -i /usr/share/icons/Papirus-Dark/16x16/apps/system-shutdown.svg 
+    dunstify 'Shutting down' -a Notification -i /usr/share/icons/Papirus-Dark/64x64/apps/system-shutdown.svg 
     sleep 1 
     /sbin/systemctl poweroff
 
 elif [ $res = "Reboot" ]; then 
 
-    dunstify 'Rebooting' -a Notification -i /usr/share/icons/Papirus-Dark/16x16/apps/system-reboot.svg 
+    dunstify 'Rebooting' -a Notification -i /usr/share/icons/Papirus-Dark/64x64/apps/system-reboot.svg 
     sleep 1 
     /sbin/systemctl reboot 
 

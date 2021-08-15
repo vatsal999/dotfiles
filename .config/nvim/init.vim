@@ -13,7 +13,8 @@ set nowrap
 set noswapfile
 set incsearch
 set termguicolors
-set scrolloff=10
+set scrolloff=15
+set clipboard=unnamedplus
 set noshowmode
 
 call plug#begin('~/.local/share/nvim/plugged')
@@ -31,23 +32,28 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'neovim/nvim-lspconfig'
+Plug 'kabouzeid/nvim-lspinstall'
+Plug 'hrsh7th/nvim-compe'
 
 Plug 'sainnhe/gruvbox-material'
-Plug 'morhetz/gruvbox'
-Plug 'joshdick/onedark.vim'
+Plug 'gruvbox-community/gruvbox'
 Plug 'ayu-theme/ayu-vim'
-Plug 'skielbasa/vim-material-monokai'
+Plug 'adrian5/oceanic-next-vim'
 
 call plug#end()
 
 let mapleader=","
 
-"let g:gruvbox_termcolors = '256'
-"let g:gruvbox_contrast_dark = 'hard'
-"colorscheme gruvbox
+let g:gruvbox_contrast_dark ='hard'
+let g:gruvbox_material_enable_italic = '1'
+let g:gruvbox_material_enable_bold = '1'
+let g:gruvbox_material_background = 'hard'
+let g:oceanic_italic_comments = 1
+let g:oceanic_bold = 1
+let g:oceanic_transparent_bg = 1
+let ayucolor="dark"
 
-"ayu colorscheme
-let ayucolor="mirage"
 colorscheme ayu
 
 "uses terminal bg for bgcolor
@@ -57,6 +63,69 @@ nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+let g:completion_matching_stratergy_list = [ 'exact', 'substring', 'fuzzy']
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" Avoid showing message extra message when using completion
+""set shortmess+=c
+
+"lua require'lspconfig'.clangd.setup{on_attach=require'completion'.on_attach}
+
+lua<<EOF
+require'lspinstall'.setup() -- important
+
+local servers = require'lspinstall'.installed_servers()
+for _, server in pairs(servers) do
+  require'lspconfig'[server].setup{}
+end
+local function setup_servers()
+  require'lspinstall'.setup()
+  local servers = require'lspinstall'.installed_servers()
+  for _, server in pairs(servers) do
+    require'lspconfig'[server].setup{}
+  end
+end
+
+setup_servers()
+
+-- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
+require'lspinstall'.post_install_hook = function ()
+  setup_servers() -- reload installed servers
+  vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
+end
+
+EOF
+
+let g:compe = {}
+let g:compe.enabled = v:true
+let g:compe.autocomplete = v:true
+let g:compe.debug = v:false
+let g:compe.min_length = 1
+let g:compe.preselect = 'enable'
+let g:compe.throttle_time = 80
+let g:compe.source_timeout = 200
+let g:compe.resolve_timeout = 800
+let g:compe.incomplete_delay = 400
+let g:compe.max_abbr_width = 100
+let g:compe.max_kind_width = 100
+let g:compe.max_menu_width = 100
+let g:compe.documentation = v:true
+
+let g:compe.source = {}
+let g:compe.source.path = v:true
+let g:compe.source.buffer = v:true
+let g:compe.source.calc = v:true
+let g:compe.source.nvim_lsp = v:true
+let g:compe.source.nvim_lua = v:true
+let g:compe.source.vsnip = v:true
+let g:compe.source.ultisnips = v:true
+let g:compe.source.luasnip = v:true
+let g:compe.source.emoji = v:true
+
 
 lua << EOF
 require('telescope').setup{
@@ -129,7 +198,7 @@ EOF
 "NVIM TREE 
 
 let g:nvim_tree_side = 'left' "left by default
-let g:nvim_tree_width = 30 "30 by default, can be width_in_columns or 'width_in_percent%'
+let g:nvim_tree_width = 20 "30 by default, can be width_in_columns or 'width_in_percent%'
 let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' ] "empty by default
 let g:nvim_tree_gitignore = 1 "0 by default
 let g:nvim_tree_auto_open = 1 "0 by default, opens the tree when typing `vim $DIR` or `vim`
@@ -208,13 +277,10 @@ let g:nvim_tree_icons = {
     \   }
     \ }
 
-nnoremap <C-n> :NvimTreeToggle<CR>
+nnoremap <leader>t :NvimTreeToggle<CR>
 nnoremap <leader>r :NvimTreeRefresh<CR>
 nnoremap <leader>n :NvimTreeFindFile<CR>
 " NvimTreeOpen and NvimTreeClose are also available if you need them
-
-set termguicolors " this variable must be enabled for colors to be applied properly
-
 " a list of groups can be found at `:help nvim_tree_highlight`
 "highlight NvimTreeFolderIcon guibg=
 
@@ -222,3 +288,12 @@ set termguicolors " this variable must be enabled for colors to be applied prope
 " remaps for copy pasta from xclip clipboard
 vnoremap <C-y> "+y
 nnoremap <C-p> "+p
+nnoremap yya :%y<CR>
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap {<space> {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap ( ()<left>
+
+autocmd FileType cpp nnoremap <F9> :term g++ -o %:r.out % -std=c++14 && ./%:r.out<CR>
+
