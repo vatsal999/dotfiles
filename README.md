@@ -33,3 +33,7 @@ Linux Dotfiles for my system
 * alacritty
 * neovim(nightly)
 
+## Credits
+Thanks [TheRealKizu](https://github.com/TheRealKizu/dotfiles) ( polybar scripts and ncmcpp and for such a good source for learning)
+
+
