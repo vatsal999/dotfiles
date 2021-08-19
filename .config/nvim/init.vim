@@ -12,10 +12,16 @@ set smartindent
 set nowrap 
 set noswapfile
 set incsearch
-set termguicolors
-set scrolloff=15
+set scrolloff=10
 set clipboard=unnamedplus
 set noshowmode
+
+if exists('+termguicolors') && ($TERM == "tmux-256color" || $TERM == "xterm-256color" || $TERM == "alacritty")
+    let &t_8f = "<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "<Esc>[48;2;%lu;%lu;%lum"
+    set termguicolors
+endif
+
 
 call plug#begin('~/.local/share/nvim/plugged')
 
@@ -31,7 +37,7 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  
 Plug 'neovim/nvim-lspconfig'
 Plug 'kabouzeid/nvim-lspinstall'
 Plug 'hrsh7th/nvim-compe'
@@ -39,7 +45,10 @@ Plug 'hrsh7th/nvim-compe'
 Plug 'sainnhe/gruvbox-material'
 Plug 'gruvbox-community/gruvbox'
 Plug 'ayu-theme/ayu-vim'
-Plug 'adrian5/oceanic-next-vim'
+
+"Vim startup time"
+Plug 'dstein64/vim-startuptime'
+Plug 'tpope/vim-commentary'
 
 call plug#end()
 
@@ -52,16 +61,19 @@ let g:gruvbox_material_background = 'hard'
 let g:oceanic_italic_comments = 1
 let g:oceanic_bold = 1
 let g:oceanic_transparent_bg = 1
+let g:ikigai_style = 'low'
 let ayucolor="dark"
 
-colorscheme ayu
 
-"uses terminal bg for bgcolor
+colorscheme gruvbox-material 
 highlight Normal guibg=NONE 
 
+
+"uses terminal bg for bgcolor
+
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 " Set completeopt to have a better completion experience
@@ -285,6 +297,19 @@ nnoremap <leader>n :NvimTreeFindFile<CR>
 "highlight NvimTreeFolderIcon guibg=
 
 
+
+lua << EOF
+vim.g.loaded_gzip = 0
+vim.g.loaded_tar = 0
+vim.g.loaded_tarPlugin = 0
+vim.g.loaded_zipPlugin = 0
+vim.g.loaded_2html_plugin = 0
+vim.g.loaded_netrw = 0
+vim.g.loaded_netrwPlugin = 0
+vim.g.loaded_spec = 0
+vim.g.loaded_syncolor = 0
+EOF
+
 " remaps for copy pasta from xclip clipboard
 vnoremap <C-y> "+y
 nnoremap <C-p> "+p
@@ -294,6 +319,20 @@ inoremap ' ''<left>
 inoremap {<space> {}<left>
 inoremap {<CR> {<CR>}<ESC>O
 inoremap ( ()<left>
+
+inoremap { {}<left>
+nnoremap H 0
+nnoremap l $
+inoremap jk <esc>
+nnoremap n nzz
+"switch buffers
+nnoremap <bs> <c-^>`”zz
+"move line up and down
+nnoremap <leader>k :m .-2<CR>==
+nnoremap <leader>j :m .+1<CR>==
+"move para or lines up and down"
+vnoremap K :m '<-2<CR>gv=gv
+vnoremap J :m '>+1<CR>gv=gv
 
 autocmd FileType cpp nnoremap <F9> :term g++ -o %:r.out % -std=c++14 && ./%:r.out<CR>
 
