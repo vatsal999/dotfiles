@@ -14,10 +14,10 @@ Linux Dotfiles for my system
 
 ## SCREENSHOTS
 
-<img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Picture1.png" alt="Pic1"> <br>
-<img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Picture2.png" alt="Pic2"><br>
-<img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Picture3.png" alt="Pic3"><br>
-<img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Picture4.png" alt="Pic4"><br>
+<img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/Picture1.png" alt="Pic1"> <br>
+<img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/Picture2.png" alt="Pic2"><br>
+<img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/Picture3.png" alt="Pic3"><br>
+<img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/Picture4.png" alt="Pic4"><br>
 
 
 
