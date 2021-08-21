@@ -26,6 +26,9 @@ endif
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'akinsho/nvim-bufferline.lua'
+Plug 'hoob3rt/lualine.nvim'
+
+
 Plug 'Yggdroot/indentLine'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
@@ -186,7 +189,39 @@ require('telescope').setup{
 }
 EOF
 
+"LUALINE"
+lua << EOF
+require('lualine').setup{
+    options = {
+      icons_enabled = true,
+      theme = 'gruvbox_material',
+      section_separators = { '', ''},
+      component_separators = { '|', '|'},
+      -- section_separators = { '', '' },
+      -- component_separators = { '', ''},
+    },
+    sections = {
+      lualine_a = { 'mode' },
+      lualine_b = { 'branch' },
+      lualine_c = { 'filename' },
+      lualine_x = {
+        {
+          'diagnostics',
+          sources = { 'nvim_lsp' },
+          symbols = {
+            hint = '  ',
+          },
+          sections = { 'error', 'warn', 'info', 'hint' },
+        },
+        'progress',
+      },
+      lualine_y = { 'filetype' },
+      lualine_z = { 'location' }
+    }
+  }
+EOF
 
+"BUFFERLINE"
 lua << EOF
 require('bufferline').setup{
     options = {
@@ -313,16 +348,20 @@ EOF
 " remaps for copy pasta from xclip clipboard
 vnoremap <C-y> "+y
 nnoremap <C-p> "+p
+"yanks whole file
 nnoremap yya :%y<CR>
+
+"auto pairing
 inoremap " ""<left>
 inoremap ' ''<left>
 inoremap {<space> {}<left>
 inoremap {<CR> {<CR>}<ESC>O
 inoremap ( ()<left>
-
 inoremap { {}<left>
+
+
 nnoremap H 0
-nnoremap l $
+nnoremap L $
 inoremap jk <esc>
 nnoremap n nzz
 "switch buffers
