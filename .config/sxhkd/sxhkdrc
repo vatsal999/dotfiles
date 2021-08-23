@@ -15,7 +15,7 @@ super + shift + Escape
     ~/bin/lock.sh
 
 super + shift + grave
-    ~/bin/rofi-power
+    ~/bin/powermenu
 
 # SCREENSHOT
 super + Print
