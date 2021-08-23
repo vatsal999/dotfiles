@@ -1,0 +1,31 @@
+/* Confirm Dialog */
+
+* {
+  accent:           #9e9e9e;
+  background:       #212121;
+  background-light: #272727;
+  foreground:       #bdbdbd;
+  on:               #66bb6a;
+  off:              #ef5350;
+}
+
+* {
+    background-color:       @background;
+    text-color:             @foreground;
+	font:				 	"Rubik 12";
+}
+
+window {
+    width:      			225px;
+    padding:    			25px;
+    border:					0px;
+    border-radius:          0px;
+    border-color:           @accent;
+    location:               center;
+    y-offset:               -20px;
+}
+
+entry {
+    expand: 				true;
+    text-color:				@accent;
+}
