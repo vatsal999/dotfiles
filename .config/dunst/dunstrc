@@ -66,7 +66,7 @@
     frame_width = 3
 
     # Defines color of the frame around the notification window.
-    frame_color = #ffffff
+    frame_color = #cfcfcf
 
     # Define a color for the separator.
     # possible values are:
@@ -216,7 +216,7 @@
     # corners.
     # The radius will be automatically lowered if it exceeds half of the
     # notification height to avoid clipping text and/or icons.
-    corner_radius = 0
+    corner_radius = 10
 
     ### Legacy
 
@@ -276,16 +276,16 @@
     context = ctrl+shift+grave
 
 [urgency_low]
-    background = "#181a20"
-    foreground = "#ffffff"
-    frame_color = "#808080"
+    background = "#1d1f21"
+    foreground = "#cfcfcf"
+    frame_color = "#cfcfcf"
     timeout = 10
     # Icon for notifications with low urgency, uncomment to enable
     #icon = ~/.config/dunst/images/notification.png
 
 [urgency_normal]
-    background = "#161616"
-    foreground = "#ffffff"
+    background = "#1d1f21"
+    foreground = "#cfcfcf"
     frame_color = "#cfcfcf"
     timeout = 10
     # Icon for notifications with normal urgency, uncomment to enable
