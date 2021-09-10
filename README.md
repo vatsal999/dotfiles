@@ -5,7 +5,7 @@ Linux Dotfiles for my system
 - **Distribution** : Arch Linux
 - **Terminal**: Alacritty
 - **App Launcher**: rofi
-- **Window Manager** : bspwn, xmonad 
+- **Window Manager** : bspwm, xmonad 
 - **Bar**: Polybar
 - **GTK theme**:  [Orchis](https://github.com/vinceliuice/Orchis-theme)
 - **Icon theme**: [vimix](https://github.com/vinceliuice/vimix-icon-theme)
@@ -32,13 +32,6 @@ Linux Dotfiles for my system
 * rofi
 * alacritty
 * neovim(nightly)
-
-## TO-DO
-
-* add xmonad rice
-* add install script
-* complete the colortheme switcher script
-
 
 
 ## Credits
