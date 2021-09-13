@@ -7,12 +7,19 @@
  *
  */
 
+
 configuration {
 	font:                      		"Rubik 14";
     disable-history:                false;
     fullscreen:                     false;
 	hide-scrollbar: 				true;
 	sidebar-mode: 					false;
+}
+
+
+element-text, element-icon {
+    background-color: inherit;
+    text-color:       inherit;
 }
 
 
@@ -39,7 +46,7 @@ window {
 listview {
     columns:						5;
     lines:							1;
-    spacing:                        15px;
+    spacing:                        0px;
     cycle:                          true;
     dynamic:                        true;
     layout:                         vertical;
@@ -49,7 +56,7 @@ mainbox {
     background-color:               @background;
     children:                       [ listview ];
     spacing:                        15px;
-    margin:                         40px;
+    margin:                         0px;
 }
 
 element {
@@ -60,11 +67,11 @@ element {
 }
 
 element-text {
-	font:							"Rubik 32";
+	font:							"JetBrains Mono Nerd Font 30";
     expand:                         true;
     horizontal-align:               0.5;
     vertical-align:                 0;
-    margin:                         25px 0px 65px 0px;
+    margin:                         25px 0px 50px 0px;
 }
 
 element normal.urgent,
@@ -82,7 +89,7 @@ element alternate.active {
 
 element selected {
     background-color:               @accent;
-    text-color:                     @background;
+    text-color:                     #262626;
     border:                  		0px;
     border-radius:                  0px;
     border-color:                  	@border;
