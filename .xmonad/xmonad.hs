@@ -59,17 +59,22 @@ import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run (runProcessWithInput, safeSpawn, spawnPipe)
 import XMonad.Util.SpawnOnce
 
+import Data.List (sortBy) -- required for polybar
+import Data.Function (on) -- required for polybar
+import Control.Monad (forM_, join)
+import XMonad.Util.NamedWindows (getName)
+
 
 myModMask = mod4Mask
 
 myTerminal = "alacritty"
 myFont = "xft:JetBrains Mono Nerd Font:regular:size=11:antialias=true:hinting=true"
-myBorderWidth = 3
+myBorderWidth = 0
 myNorBorderColor = "#1d1f21"
 myFocBorderColor = "#808080"
 
 
-sidebarlaunch = spawn "exec ~/bin/eww open-many weather_side time_side smol_calendar player_side sys_side sliders_side"
+sidebarlaunch = spawn "exec ~/bin/eww open-many hub"
 ewwclose = spawn "exec ~/bin/eww close-all"
 
 windowCount :: X (Maybe String)
@@ -83,11 +88,14 @@ myStartupHook = do
   setWMName "LG3D"
   spawnOnce "xsetroot -cursor_name left_ptr"
   spawnOnce "exec ~/bin/pulse-volume-watcher.py | xob &"
-  spawn "nitrogen --random /home/vatsal/Pictures/Wallpapers/Black --set-scaled &"
+  -- spawn "nitrogen --random /home/vatsal/Pictures/Wallpapers/Black --set-scaled &"
+  spawn "nitrogen --set-scaled /home/vatsal/Pictures/Wallpapers/Black/hell.png &"
   spawn "exec ~/bin/eww daemon"
-  spawn "exec ~/.config/polybar/launch.sh"
+  -- spawn "exec ~/.config/polybar/launch.sh"
+  spawnOnce "tint2 -c .config/tint2/vertical.tint2rc"
+  spawnOnce "tint2 -c .config/tint2/systray.tint2rc"
   spawnOnce "dunst"
-  spawnOnce "picom --experimental-backends &"
+  spawnOnce "picom &"
   spawnOnce "optimus-manager-qt &"
   spawnOnce "nm-applet &"
 
@@ -140,7 +148,7 @@ tall     = renamed [Replace "tall"]
            $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
            $ limitWindows 12
-           $ mySpacing 8
+           $ mySpacing 5
            $ ResizableTall 1 (3/100) (1/2) []
 monocle  = renamed [Replace "monocle"]
            $ smartBorders
@@ -206,7 +214,7 @@ myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts float
                                  ||| grid
                                  ||| threeRow
 
-myWorkspaces = [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
+myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y -> (x,y)
 
 clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
@@ -231,6 +239,7 @@ myManageHook = composeAll
      , className =? "toolbar"         --> doFloat
      --, title =? "Oracle VM VirtualBox Manager"  --> doFloat
      --, className =? "Gimp"            --> doShift ( myWorkspaces !! 8 )
+     , className =? "YouTube Music"    --> doShift (myWorkspaces !! 8 )
      , (className =? "firefox" <&&> resource =? "Dialog") --> doFloat  -- Float Firefox Dialog
      , isFullscreen -->  doFullFloat
      ] <+> namedScratchpadManageHook myScratchPads
@@ -327,22 +336,49 @@ myKeys =
         , ("M-w", sidebarlaunch)
         , ("M-S-w", ewwclose)
         , ("M-<Esc>", spawn "~/bin/lock.sh")
+        , ("M-S-<Esc>", spawn "~/bin/powermenu")
     --screenshot
         , ("<Print>", spawn "~/bin/screenshot")
         , ("S-<Print>", spawn "~/bin/selectscreenshot")
     --volume
         , ("<XF86AudioMute>", spawn "pamixer -t")
-        , ("<XF86AudioLowerVolume>", spawn "pamixer --decrease 1")
-        , ("<XF86AudioRaiseVolume>", spawn "pamixer --increase 1")
-	    , ("<XF86MonBrightnessUp>", spawn "brightnessctl s +1%")
-	    , ("<XF86MonBrightnessDown>", spawn "brightnessctl s 1%-")
+        , ("<XF86AudioLowerVolume>", spawn "pamixer --decrease 5")
+        , ("<XF86AudioRaiseVolume>", spawn "pamixer --increase 5")
+        , ("<XF86MonBrightnessUp>", spawn "brightnessctl s +1%")
+        , ("<XF86MonBrightnessDown>", spawn "brightnessctl s 1%-")
         ]
     -- The following lines are needed for named scratchpads.
           where nonNSP          = WSIs (return (\ws -> W.tag ws /= "NSP"))
                 nonEmptyNonNSP  = WSIs (return (\ws -> isJust (W.stack ws) && W.tag ws /= "NSP"))
 
+
+-- polybar related
+-- eventLogHook = do
+--   winset <- gets windowset
+--   title <- maybe (return "") (fmap show . getName) . W.peek $ winset
+--   let currWs = W.currentTag winset
+--   let wss = map W.tag $ W.workspaces winset
+--   let wsStr = join $ map (fmt currWs) $ sort' wss
+
+--   io $ appendFile "/tmp/.xmonad-title-log" (title ++ "\n")
+--   io $ appendFile "/tmp/.xmonad-workspace-log" (wsStr ++ "\n")
+
+--   where fmt currWs ws
+--           | currWs == ws = "[" ++ ws ++ "]"
+--           | otherwise    = " " ++ ws ++ " "
+--         sort' = sortBy (compare `on` (!! 0))
+
+
 main :: IO ()
 main = do
+    -- polybar related
+    -- forM_ [".xmonad-workspace-log", ".xmonad-title-log"] $ \file -> do
+    --     safeSpawn "mkfifo" ["/tmp/" ++ file]
+
+    -- let myConf = def
+    --     logHook         = eventLogHook
+        
+
     xmonad $ ewmh def
         { manageHook         = myManageHook <+> manageDocks
         , handleEventHook    = docksEventHook

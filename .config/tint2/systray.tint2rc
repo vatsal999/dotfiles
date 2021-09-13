@@ -1,0 +1,51 @@
+# Background 1: Systray
+rounded = 14
+border_width = 0
+border_sides =
+border_content_tint_weight = 0
+background_content_tint_weight = 0
+background_color = #1e1e1e 100
+border_color = #1e1e1e 0
+background_color_hover = #1e1e1e 100
+border_color_hover = #1e1e1e 0
+background_color_pressed = #1e1e1e 100
+border_color_pressed = #1e1e1e 0
+
+# Panel
+panel_items = S
+panel_size = 25% 45
+panel_margin = 0 0
+panel_padding = 7 7 7
+panel_background_id = 4
+wm_menu = 1
+panel_dock = 1
+panel_pivot_struts = 0
+panel_position = bottom left vertical
+panel_layer = top
+panel_monitor = primary
+panel_shrink = 0
+autohide = 1
+autohide_show_timeout = 0
+autohide_hide_timeout = 0
+autohide_height = 1
+strut_policy = follow_size
+panel_window_name = systray.tint2
+disable_transparency = 1
+mouse_effects = 1
+font_shadow = 0
+mouse_hover_icon_asb = 100 0 10
+mouse_pressed_icon_asb = 100 0 0
+scale_relative_to_dpi = 0
+scale_relative_to_screen_height = 0
+
+
+
+
+# system tray (notification area)
+systray_padding = 8 0 10
+systray_background_id = 1
+systray_sort = ascending
+systray_icon_size = 16
+systray_icon_asb = 100 0 10
+systray_monitor = 1
+systray_name_filter =
