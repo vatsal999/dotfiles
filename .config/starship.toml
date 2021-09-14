@@ -5,5 +5,5 @@ $character """
 add_newline = true
 
 [character]
-success_symbol = "[](blue)"
+success_symbol = "[ﴔ](green)"
 

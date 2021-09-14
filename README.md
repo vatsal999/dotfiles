@@ -6,7 +6,7 @@ Linux Dotfiles for my system
 - **Terminal**: Alacritty
 - **App Launcher**: rofi
 - **Window Manager** : bspwm, xmonad 
-- **Bar**: Polybar
+- **Bar**: Tint2
 - **GTK theme**:  [Orchis](https://github.com/vinceliuice/Orchis-theme)
 - **Icon theme**: [vimix](https://github.com/vinceliuice/vimix-icon-theme)
 - **GTK font**: [Rubik](https://fonts.google.com/specimen/Rubik)
@@ -17,7 +17,7 @@ Linux Dotfiles for my system
 <img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/Picture1.png" alt="Pic1"> <br>
 <img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/Picture2.png" alt="Pic2"><br>
 <img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/Picture3.png" alt="Pic3"><br>
-<img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/Picture4.png" alt="Pic4"><br>
+<img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/lockscreen.png" alt="Pic4"><br>
 
 
 

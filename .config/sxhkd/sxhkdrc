@@ -5,17 +5,17 @@ super + Return
 
 # ROFI
 super + space
-	rofi -show drun
+    rofi  -show drun -modi run,drun,window  -drun-icon-theme \"Papirus-Dark\"
 
 super + Tab
 	rofi -show window 
 
 #Lock option
-super + shift + Escape
+super + Escape
     ~/bin/lock.sh
 
-super + shift + grave
-    ~/bin/powermenu
+super + shift + Escape 
+    ~/bin/powermenu 
 
 # SCREENSHOT
 super + Print
@@ -29,7 +29,7 @@ super + g
 	~/bin/colorscheme
 
 # RELOAD SXHKD
-super + Escape
+super + grave 
 	pkill -USR1 -x sxhkd
 
 # VOLUME UP
@@ -55,8 +55,8 @@ super + alt + {q,r}
 	bspc {quit,wm -r}
 
 # CLOSE/KILL WINDOW
-super + {_,shift + }w
-	bspc node -{c,k}
+super + {_,shift + }c
+	bspc node -{k,c}
 
 # alternate between the tiled and monocle layout
 super + m
@@ -96,16 +96,16 @@ super + {p,b,comma,period}
 	bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous window in the current desktop
-super + {_,shift + }c
-	bspc node -f {next,prev}.local.!hidden.window
+# super + {_,shift + }c
+# 	bspc node -f {next,prev}.local.!hidden.window
 
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
 # focus the last node/desktop
-super + grave
-	bspc {node,desktop} -f last
+# super + grave
+# 	bspc {node,desktop} -f last
 
 # focus the older or newer node in the focus history
 super + {o,i}

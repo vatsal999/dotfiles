@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# CREDITS: https://github.com/elkowar
+
+if [ -z "$1" ]; then 
+    echo "usage: screenrec <output-file-path>"
+    exit 1
+fi
+
+ffmpeg -video_size 1920x1080 -framerate 25 -f x11grab -i :0.0 "$1"

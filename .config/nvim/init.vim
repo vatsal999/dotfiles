@@ -2,7 +2,6 @@ set encoding=utf8
 set number
 set relativenumber
 set mouse=a
-set nohlsearch
 set hidden
 set noerrorbells
 set tabstop=4 softtabstop=4 
@@ -13,21 +12,23 @@ set nowrap
 set noswapfile
 set incsearch
 set scrolloff=10
-set clipboard=unnamedplus
+" set clipboard=unnamedplus
 set noshowmode
+set cursorline
+set background=dark
 
-if exists('+termguicolors') && ($TERM == "tmux-256color" || $TERM == "xterm-256color" || $TERM == "alacritty")
+if exists('+termguicolors') && ($TERM == "tmux-256color" || $TERM == "alacritty" || $TERM == "xterm-kitty")
     let &t_8f = "<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "<Esc>[48;2;%lu;%lu;%lum"
     set termguicolors
 endif
 
 
+
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'akinsho/nvim-bufferline.lua'
 Plug 'hoob3rt/lualine.nvim'
-
 
 Plug 'Yggdroot/indentLine'
 Plug 'kyazdani42/nvim-web-devicons'
@@ -48,6 +49,7 @@ Plug 'hrsh7th/nvim-compe'
 Plug 'sainnhe/gruvbox-material'
 Plug 'gruvbox-community/gruvbox'
 Plug 'ayu-theme/ayu-vim'
+Plug 'cocopon/iceberg.vim'
 
 "Vim startup time"
 Plug 'dstein64/vim-startuptime'
@@ -55,7 +57,6 @@ Plug 'tpope/vim-commentary'
 
 call plug#end()
 
-let mapleader=","
 
 let g:gruvbox_contrast_dark ='hard'
 let g:gruvbox_material_enable_italic = '1'
@@ -64,16 +65,18 @@ let g:gruvbox_material_background = 'hard'
 let g:oceanic_italic_comments = 1
 let g:oceanic_bold = 1
 let g:oceanic_transparent_bg = 1
-let g:ikigai_style = 'low'
+let g:ikigai_style = 'high'
+let g:ikigai_transparent_background = 1
 let ayucolor="dark"
 
 
-colorscheme gruvbox-material 
+colorscheme ikigai
 highlight Normal guibg=NONE 
 
 
 "uses terminal bg for bgcolor
 
+let mapleader=" "
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
@@ -139,7 +142,7 @@ let g:compe.source.nvim_lua = v:true
 let g:compe.source.vsnip = v:true
 let g:compe.source.ultisnips = v:true
 let g:compe.source.luasnip = v:true
-let g:compe.source.emoji = v:true
+let g:compe.source.emoji = v:false
 
 
 lua << EOF
@@ -172,7 +175,7 @@ require('telescope').setup{
     file_sorter =  require'telescope.sorters'.get_fuzzy_file,
     file_ignore_patterns = {},
     generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
-    shorten_path = true,
+    path_display = true,
     winblend = 0,
     border = {},
     borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
@@ -194,7 +197,7 @@ lua << EOF
 require('lualine').setup{
     options = {
       icons_enabled = true,
-      theme = 'gruvbox_material',
+      theme = 'jellybeans',
       section_separators = { '', ''},
       component_separators = { '|', '|'},
       -- section_separators = { '', '' },
@@ -226,18 +229,73 @@ lua << EOF
 require('bufferline').setup{
     options = {
         max_name_length = 14,
-        separator_style = "thin"
+        separator_style = "thin",
+        diagnostics = false,
     },
     highlights = {
+
+        background = {
+            guibg = '#262525',
+        },
         -- Focused Window
         buffer_selected = {
-            guibg = "#1d1f21",
-            gui = "bold"
+            guibg = '#161616',
+            guifg = '#cfcfcf',
+            gui = "bold",
         },
-        modified_selected = {
-            guibg = "#1d1f21"
+        
+        -- close buttons
+
+        close_button = {
+            guifg = '#808080',
+            guibg = '#262525',
+        },
+        close_button_visible = {
+            guifg = '#808080',
+            guibg = '#262525',
+        },
+        close_button_selected = {
+            guifg = '#FF6161',
+            guibg = '#161616',
+        },
+        fill = {
+            guifg = '#808080',
+            guibg = '#262525',
+        },
+        indicator_selected = {
+            guifg = '#161616',
+            guibg = '#161616',
         },
 
+        
+        separator = {
+            guibg = '#262525',
+            guifg = '#262525',
+        },
+        
+        separator_visible = {
+            guibg = '#262525',
+            guifg = '#262525',
+        },
+        separator_selected = {
+            guibg = '#262525',
+            guifg = '#262525',
+        },
+
+        tab = {
+            guifg = '#808080',
+            guibg = '#1d1f21',
+        },
+        tab_selected = {
+            guifg = '#262525',
+            guibg = '#83a2ea',
+         },
+        tab_close = {
+            guifg = '#FF6161',
+            guibg = '#161616',
+        },
+        
+        
     }
 }
 EOF
@@ -260,7 +318,7 @@ let g:nvim_tree_highlight_opened_files = 0 "0 by default, will enable folder and
 let g:nvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
 let g:nvim_tree_tab_open = 0 "0 by default, will open the tree when entering a new tab and the tree was previously open
 let g:nvim_tree_auto_resize = 0 "1 by default, will resize the tree to its saved width when opening a file
-let g:nvim_tree_disable_netrw = 0 "1 by default, disables netrw
+let g:nvim_tree_disable_netrw = 1 "1 by default, disables netrw
 let g:nvim_tree_hijack_netrw = 0 "1 by default, prevents netrw from automatically opening when opening directories (but lets you keep its other utilities)
 let g:nvim_tree_add_trailing = 0 "0 by default, append a trailing slash to folder names
 let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
@@ -364,8 +422,9 @@ nnoremap H 0
 nnoremap L $
 inoremap jk <esc>
 nnoremap n nzz
+nnoremap N Nzz
 "switch buffers
-nnoremap <bs> <c-^>`”zz
+nnoremap <bs> <c-^>`"zz
 "move line up and down
 nnoremap <leader>k :m .-2<CR>==
 nnoremap <leader>j :m .+1<CR>==
@@ -374,4 +433,3 @@ vnoremap K :m '<-2<CR>gv=gv
 vnoremap J :m '>+1<CR>gv=gv
 
 autocmd FileType cpp nnoremap <F9> :term g++ -o %:r.out % -std=c++14 && ./%:r.out<CR>
-
