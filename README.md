@@ -14,9 +14,9 @@ Linux Dotfiles for my system
 
 ## SCREENSHOTS
 
-<img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/Picture1.png" alt="Pic1"> <br>
-<img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/Picture2.png" alt="Pic2"><br>
-<img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/Picture3.png" alt="Pic3"><br>
+<img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/Main.png" alt="Pic1"> <br>
+<img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/firefox.png" alt="Pic2"><br>
+<img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/nvim.png" alt="Pic3"><br>
 <img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/lockscreen.png" alt="Pic4"><br>
 
 
