@@ -10,13 +10,18 @@ Linux Dotfiles for my system
 - **GTK theme**:  [Orchis](https://github.com/vinceliuice/Orchis-theme)
 - **Icon theme**: [vimix](https://github.com/vinceliuice/vimix-icon-theme)
 - **GTK font**: [Rubik](https://fonts.google.com/specimen/Rubik)
-- **Terminal Font**: [FiraCode Nerd Font](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode)
+- **Terminal Font**: SFMono
 
 ## SCREENSHOTS
 
+## Tint2(Bar), vim(text editor), dunst(notifications), starship (prompt)
 <img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/Main.png" alt="Pic1"> <br>
+
+## FireFox(customCss), Thunar(File Manager)
 <img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/firefox.png" alt="Pic2"><br>
+## Neovim
 <img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/nvim.png" alt="Pic3"><br>
+## i3lock-color(lockscreen)
 <img src="https://raw.githubusercontent.com/vatsal999/dotfiles/main/Pictures/lockscreen.png" alt="Pic4"><br>
 
 
@@ -24,14 +29,18 @@ Linux Dotfiles for my system
 
 ## DEPENDENCIES
 
-* bspwm, sxhkd
 * xmonad 
-* picom(jonaburg fork)
-* polybar
+* picom(ibhagwan fork)
+* Tint2
 * dunst
 * rofi
 * alacritty
 * neovim(nightly)
+
+## TODO
+
+* Finish vim colorscheme
+* Move neovim config to lua
 
 
 ## Credits
