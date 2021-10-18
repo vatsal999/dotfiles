@@ -29,7 +29,7 @@
     # the top and down respectively.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "300x60-15+55"
+    geometry = "300x50-15+55"
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
@@ -53,7 +53,7 @@
     # Draw a line of "separator_height" pixel height between two
     # notifications.
     # Set to 0 to disable.
-    separator_height = 2
+    separator_height = 0
 
     # Padding between text and separator.
     padding = 8
@@ -63,7 +63,7 @@
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.
-    frame_width = 3
+    frame_width = 0
 
     # Defines color of the frame around the notification window.
     frame_color = #cfcfcf
@@ -241,7 +241,7 @@
     # * close_all: Close all notifications.
     mouse_left_click = close_current
     mouse_middle_click = do_action
-    mouse_right_click = close_all
+    mouse_right_click = do_action
 
 # Experimental features that may or may not work correctly. Do not expect them
 # to have a consistent behaviour across releases.
@@ -276,7 +276,7 @@
     context = ctrl+shift+grave
 
 [urgency_low]
-    background = "#1d1f21"
+    background = "#161616"
     foreground = "#cfcfcf"
     frame_color = "#cfcfcf"
     timeout = 10
@@ -284,7 +284,7 @@
     #icon = ~/.config/dunst/images/notification.png
 
 [urgency_normal]
-    background = "#1d1f21"
+    background = "#161616"
     foreground = "#cfcfcf"
     frame_color = "#cfcfcf"
     timeout = 10
