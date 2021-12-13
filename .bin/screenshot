@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# to use this script call functions like this:
+# ./screenshot ssfull
+
+function ssfull {
+    # full screenshot. saves in ~/Pictures/Screenshots dir
+    maim ~/Pictures/Screenshots/$(date +%d:%H:%M:%S).png
+    dunstify -i ~/.icons/image.png 'Screenshot saved'
+}
+
+function ssselect {
+    # screenshot with selection mode. saves in ~/Pictures/Screenshots dir
+    maim -s -u -l -c 1,1,1,0.3 ~/Pictures/Screenshots/$(date +%H-%M-%S).png
+    notify-send "Screenshot saved" -i ~/.icons/crop.png
+}
+
+function ssclip {
+    # screenshot (selection mode) which is them passed to xclip (clipboard)
+    maim -s --highlight --color 1,1,1,0.1 --format png /dev/stdout | xclip -selection clipboard -t image/png -i
+    notify-send "Screenshot" "copied to clipboard" -i ~/.icons/clip.png
+
+}
+
+case $1 in 
+    ssfull)
+        ssfull
+        ;;
+    ssselect)
+        ssselect
+        ;;
+    ssclip)
+        ssclip
+        ;;
+esac

@@ -1,4 +1,0 @@
-#!/bin/sh
-
-maim -s -u -l -c 1,1,1,0.3 ~/Pictures/Screenshots/$(date +%H-%M-%S).png
-notify-send "Screenshot saved " -i /usr/share/icons/Dark-MacOSDark/64x64/devices/camera-photo.svg

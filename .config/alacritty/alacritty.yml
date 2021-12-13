@@ -1,12 +1,13 @@
+# imp for correct colors in tmux
 env:
-  TERM: alacritty
+  TERM: xterm-256color
 
 window:
   padding:
-    x: 30
-    y: 30
+    x: 10
+    y: 10
 
-  startup_mode: Windowed
+  # startup_mode: Windowed
 
   dynamic_title: true
   dynamic_padding: true
@@ -14,7 +15,7 @@ window:
   class:
     instance: Alacritty
     general: Alacritty
-gtk_theme_variant: None
+# gtk_theme_variant: None
 
 scrolling:
   history: 10000
@@ -23,62 +24,156 @@ scrolling:
 
 font:
   normal:
-      family: FiraCode Nerd Font
-      style: Regular
+      family: Blex Mono Nerd Font
+      style: Medium
 
   bold:
-      family: FiraCode Nerd Font
+      family: SFMono
       style: Bold
 
   italic:
-      family: FiraCode Nerd Font
+      family: CartographCF
       style: Italic
 
-  size: 12.0
+  size: 8.0
 
 background_opacity: 1.0
 
-colors:
-  primary:
-    background: '#1d1f21'
-    foreground: '#cfcfcf'
+#COLORS
+schemes:
+    idk_theme: &idk_theme
+      primary:
+        background: '#1D2021'
+        # background: '#181A1B'
+        #foreground: '#6A6A6A'
+        foreground: '#cfcfcf'
+      normal:
+        black:   '#1F252A'
+        red:     '#b76666'
+        green:   '#8d987e'
+        yellow:  '#ffaf60'
+        blue:    '#8BA6C5'
+        magenta: '#8d8bc4'
+        cyan:    '#8bc2c4'
+        white:   '#cfcfcf'
 
-  cursor:
-    text: CellBackground
-    cursor: CellForeground
+      bright:
+        black:   '#384149'
+        red:     '#FF6161'
+        green:   '#89a365'
+        yellow:  '#f0c674'
+        blue:    '#8BA6C5'
+        magenta: '#d597ce'
+        cyan:    '#b8e3ea'
+        white:   '#cfcfcf'
 
-  search:
-    matches:
-      foreground: '#80D1FF'
-      background: '#1F252A'
-    focused_match:
-      foreground: CellBackground
-      background: CellForeground
+      cursor:
+        text: CellBackground
+        cursor: CellForeground
 
-  selection:
-    text: "#1F252A"
-    background: "#D5D5D5"
+      search:
+        matches:
+          foreground: '#80D1FF'
+          background: '#1F252A'
+        focused_match:
+          foreground: CellBackground
+          background: CellForeground
 
-  normal:
-    black:   '#1F252A'
-    red:     '#FF6161'
-    green:   '#c3e88d'
-    yellow:  '#ffaf60'
-    blue:    '#8BA6C5'
-    magenta: '#8d8bc4'
-    cyan:    '#8bc2c4'
-    white:   '#eeffff'
+      selection:
+        text: "#1F252A"
+        background: "#D5D5D5"
 
-  bright:
-    black:   '#384149'
-    red:     '#FF6161'
-    green:   '#c3e88d'
-    yellow:  '#f0c674'
-    blue:    '#8BA6C5'
-    magenta: '#d597ce'
-    cyan:    '#b8e3ea'
-    white:   '#e8e8e8'
+    # Colors (Jellybeans)
+    Jellybeans: &Jellybeans
 
+      primary:
+        background: '#161616'
+        foreground: '#E8E8D3'
+
+      cursor:
+        text: CellBackground
+        cursor: CellForeground
+
+      normal:
+        black:   '#1D2021'
+        red:     '#B85335'
+        green:   '#799D6A'
+        yellow:  '#FFB964'
+        blue:    '#667899'
+        magenta: '#8787AF'
+        cyan:    '#668799'
+        white:   '#888888'
+
+      bright:
+        black:   '#404040'
+        red:     '#CF6A4C'
+        green:   '#99AD6A'
+        yellow:  '#FAD07A'
+        blue:    '#8197BF'
+        magenta: '#C6B6EE'
+        cyan:    '#8FBFDC'
+        white:   '#E8e8D3'
+
+      selection:
+        text: '#5963a2'
+        background: '#f6f6f6'
+
+    # Colors (Gruvbox dark)
+    Gruvbox: &Gruvbox
+      primary:
+        background: '#1D2021'
+        foreground: '#cfcfcf'
+
+      normal:
+        black:   '#1D2021'
+        red:     '#cc241d'
+        green:   '#98971a'
+        yellow:  '#d79921'
+        blue:    '#458588'
+        magenta: '#b16286'
+        cyan:    '#689d6a'
+        white:   '#a89984'
+
+      bright:
+        black:   '#928374'
+        red:     '#fb4934'
+        green:   '#b8bb26'
+        yellow:  '#fabd2f'
+        blue:    '#83a598'
+        magenta: '#d3869b'
+        cyan:    '#8ec07c'
+        white:   '#ebdbb2'
+
+# Colors (Gruvbox Material Dark Medium)
+    Gruvbox-Material: &Gruvbox-Material
+        primary:
+            background: '0x282828'
+            foreground: '0xdfbf8e'
+
+        normal:
+            black:   '0x665c54'
+            red:     '0xea6962'
+            green:   '0xa9b665'
+            yellow:  '0xe78a4e'
+            blue:    '0x7daea3'
+            magenta: '0xd3869b'
+            cyan:    '0x89b482'
+            white:   '0xdfbf8e'
+
+        bright:
+            black:   '0x928374'
+            red:     '0xea6962'
+            green:   '0xa9b665'
+            yellow:  '0xe3a84e'
+            blue:    '0x7daea3'
+            magenta: '0xd3869b'
+            cyan:    '0x89b482'
+            white:   '0xdfbf8e'
+ 
+colors: *Gruvbox
+
+
+#BELL
 bell:
   animation: EaseOutExpo
 
@@ -86,15 +181,13 @@ bell:
 
   color: '#ffffff'
 
+#CURSOR
 cursor:
   style:
-    shape: Beam
-
+    shape: Block
   blinking: true
   blink_interval: 750
-
   unfocused_hollow: false
-
   thickness: 0.15
 
 live_config_reload: true
