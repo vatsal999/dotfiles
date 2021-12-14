@@ -23,6 +23,7 @@ return require('packer').startup(function()
           require "plugins.lspconfig"
       end
   }
+  use {'rafamadriz/friendly-snippets'}
 
   use {
       'hrsh7th/nvim-cmp',
@@ -32,8 +33,14 @@ return require('packer').startup(function()
   }
   use {'hrsh7th/cmp-nvim-lsp'}
   use {'hrsh7th/cmp-buffer'}
-  use {'hrsh7th/cmp-vsnip'}
+  use {'hrsh7th/cmp-vsnip',
+        config = function ()
+            require "plugins.vsnip"
+        end
+  }
+    
   use {'hrsh7th/vim-vsnip'}
+
 
   use {
       'nvim-treesitter/nvim-treesitter',
@@ -82,6 +89,19 @@ return require('packer').startup(function()
   }
 
   use {'tpope/vim-commentary'}
+  use {
+      "lukas-reineke/indent-blankline.nvim",
+      config = function ()
+          require "plugins.indent"
+      end
+  }
+  use {
+      "norcalli/nvim-colorizer.lua",
+      cmd = "ColorizerToggle",
+      config = function()
+         require("plugins.colorizer")
+      end,
+  }
 
 
   -- Lazy loading:
