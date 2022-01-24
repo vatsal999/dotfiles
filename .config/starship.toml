@@ -1,9 +1,21 @@
-format = """
-$directory$git_branch$git_metrics$git_status$rust$package
-$character """
-
+# Inserts a blank line between shell prompts
 add_newline = true
 
-[character]
-success_symbol = "[ﴔ](green)"
+[character]                            
+success_symbol = "[](bold green)"
+error_symbol = "[](bold red)"
+vicmd_symbol = "[](blue)"
+
+# Disable the package module, hiding it from the prompt completely
+[package]
+disabled = true
+
+[directory]
+style="blue"
+
+[git_branch]
+symbol = ""
+style = "yellow"
+
+
 
