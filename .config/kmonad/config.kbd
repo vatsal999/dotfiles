@@ -25,7 +25,7 @@
 )
  
 (defalias
-  ext  (layer-toggle extend) ;; Bind 'ext' to the Extend Layer
+  ext  (layer-toggle extend)
 )
 
 (defalias

@@ -1,6 +1,4 @@
-
 export TERM="xterm-256color"
-
 
 # HISTORY
 SAVEHIST=50000
@@ -16,9 +14,9 @@ setopt INC_APPEND_HISTORY   # Write to the history file immediately, not when th
 # VIM MODE
 bindkey -v
 bindkey "^?" backward-delete-char
-# User configuration
-#
-export PATH=$HOME/.bin:/usr/local/bin:$PATH
+
+export PATH="$HOME/.local/bin/:/usr/local/bin:$PATH"
+autoload -U compinit
 #
 
 ### CHANGE TITLE OF TERMINALS
@@ -42,7 +40,7 @@ esac
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
-#   export EDITOR='mvim'
+#   export EDITOR='nvim'
 # fi
 
 # Compilation flags
@@ -51,6 +49,10 @@ esac
 #
 # ALIASES
 #
+# these lines required for prompt to work
+setopt promptsubst
+autoload -Uz colors && colors
+autoload -Uz promptinit && promptinit
 
 alias clock="tty-clock -c -C 7"
 
@@ -59,10 +61,14 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
+#load agnoster prompt theme
+source "$ZDOTDIR/agnoster.zsh"
 
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# install zsh-autosuggestions and zsh-syntax-highlighting from pacman community
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-#source ~/.config/zsh/prompt.zsh
+#for homebrew installation (MacOS)
+#source /opt/share/homebrew/
 
 

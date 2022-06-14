@@ -17,24 +17,19 @@
     # will be ignored.
     follow = mouse
 
-    # The geometry of the window:
-    #   [{width}]x{height}[+/-{x}+/-{y}]
-    # The geometry of the message window.
-    # The height is measured in number of notifications everything else
-    # in pixels.  If the width is omitted but the height is given
-    # ("-geometry x2"), the message window expands over the whole screen
-    # (dmenu-like).  If width is 0, the window expands to the longest
-    # message displayed.  A positive x is measured from the left, a
-    # negative from the right side of the screen.  Y is measured from
-    # the top and down respectively.
-    # The width can be negative.  In this case the actual width is the
-    # screen width minus the width defined in within the geometry option.
-    geometry = "300x50-15+70"
+    # geomtry is deprecated
+    # geometry = "300x50-100+30"
+    width = 300
+    height = 100
+    origin = top-right
+    offset = 20x20 #20pix from right and 20 from top
+
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
 
-    #progress_bar = true
+    progress_bar = true
+    highlight = "#cfcfcf"
 
     # Shrink window if it's smaller than the width.  Will be ignored if
     # width is 0.
@@ -63,10 +58,10 @@
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.
-    frame_width = 0
+    frame_width = 3
 
     # Defines color of the frame around the notification window.
-    frame_color = #000000
+    frame_color = "#222222"
 
     # Define a color for the separator.
     # possible values are:
@@ -200,7 +195,7 @@
     # Print a notification on startup.
     # This is mainly for error detection, since dbus (re-)starts dunst
     # automatically after a crash.
-    startup_notification = false
+    # startup_notification = false
 
     # Manage dunst's desire for talking
     # Can be one of the following values:
@@ -209,14 +204,14 @@
     #  mesg: Important Messages
     #  info: all unimportant stuff
     # debug: all less than unimportant stuff
-    verbosity = mesg
+    #verbosity = mesg
 
     # Define the corner radius of the notification window
     # in pixel size. If the radius is 0, you have no rounded
     # corners.
     # The radius will be automatically lowered if it exceeds half of the
     # notification height to avoid clipping text and/or icons.
-    corner_radius = 10
+    corner_radius = 0
 
     ### Legacy
 
@@ -253,40 +248,18 @@
     # where there are multiple screens with very different dpi values.
     per_monitor_dpi = false
 
-[shortcuts]
-
-    # Shortcuts are specified as [modifier+][modifier+]...key
-    # Available modifiers are "ctrl", "mod1" (the alt-key), "mod2",
-    # "mod3" and "mod4" (windows-key).
-    # Xev might be helpful to find names for keys.
-
-    # Close notification.
-    close = ctrl+space
-
-    # Close all notifications.
-    close_all = ctrl+shift+space
-
-    # Redisplay last message(s).
-    # On the US keyboard layout "grave" is normally above TAB and left
-    # of "1". Make sure this key actually exists on your keyboard layout,
-    # e.g. check output of 'xmodmap -pke'
-    history = ctrl+grave
-
-    # Context menu.
-    context = ctrl+shift+grave
-
 [urgency_low]
-    background = "#1D2021"
+    background = "#161616"
     foreground = "#cfcfcf"
-    frame_color = "#cfcfcf"
-    timeout = 10
+    #frame_color = "#cfcfcf"
+    timeout = 2
     # Icon for notifications with low urgency, uncomment to enable
     #icon = ~/.config/dunst/images/notification.png
 
 [urgency_normal]
-    background = "#1D2021"
+    background = "#161616"
     foreground = "#cfcfcf"
-    frame_color = "#cfcfcf"
+    #frame_color = "#cfcfcf"
     timeout = 10
     # Icon for notifications with normal urgency, uncomment to enable
     #icon = ~/.config/dunst/images/notification.png
@@ -332,6 +305,16 @@
 [Spotify]
 	appname = Spotify
 	format = "%s\n"
+    history_ignore = yes
+
+[YoutubeMusic]
+    appname = YouTube Music
+    history_ignore = yes
+
+[volume]
+    appname = volume
+    urgency = low
+    history_ignore = yes
 
 # SCRIPTING
 # You can specify a script that gets run when the rule matches by

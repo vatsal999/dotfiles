@@ -1,13 +1,10 @@
 -- My Xmonad Config that works (kinda)
 --
--- disclaimer:
--- i DONT know haskell. this is written by just following the documentation and 
--- referencing other peoples config (relevant parts are credited)
 -- some features of this config are:
--- 1. 4 layouts: Simple Tall, BinarySpacePartition(BSP), ThreeCol , tabbed
+-- 1. 4 layouts: Simple Tall, ThreeCol , tabbed
 -- 2. Tabbed sublayout
--- 3. named scratchpads (literally one of top3 features of xmonad)
--- 4. toggleable polybar ( kinda works T_T)
+-- 3. named scratchpad
+-- 4. toggleable polybar ( kinda works. see below)
 -- 5. smartGaps (gaps disappear if only one window) and toggleable gaps(works gud!)
 -- 6. FlashFocus instead of Borders
 -- TODO: 1. Fix toggleable polybar 
@@ -15,8 +12,8 @@
 --          the problem is it toggles the struts of only the current workspace. 
 --          so if you hide the bar on 1 wks, switch to another wks(remember struts are enabled on this by default)
 --          and then unhide the bar on this wks it gets fucked up
---      2. Learn haskell T_T
---      3. Experimentation with DynamicProjects (seems interesting)
+--      2. Experimentation with DynamicProjects (seems interesting)
+--      3. Explore XMonad.Layout.BoringWindows
 --
 import XMonad
 import System.Exit
@@ -29,20 +26,21 @@ import XMonad.Hooks.SetWMName
 import qualified XMonad.StackSet as W
 import XMonad.ManageHook
 import XMonad.Util.NamedScratchpad
--- import XMonad.Util.DynamicScratchpads
 
 import XMonad.Actions.RotSlaves
 import XMonad.Actions.WithAll
 import XMonad.Actions.CopyWindow
+import XMonad.Actions.MouseResize
 
 import XMonad.Prompt 
 import XMonad.Prompt.ConfirmPrompt
 
 import XMonad.Layout.Simplest
 import XMonad.Layout.SubLayouts
+import qualified XMonad.Layout.BoringWindows as BoringWindows
 import XMonad.Layout.WindowNavigation
 import XMonad.Layout.Tabbed
-import XMonad.Layout.BinarySpacePartition
+-- import XMonad.Layout.BinarySpacePartition
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing
 import XMonad.Layout.ResizableTile
@@ -62,11 +60,13 @@ import XMonad.Util.WindowProperties
 
 myTerminal = "alacritty"
 
-myBorderWidth = 0
+myBorderWidth = 3
 
-myNormalBorderColor = "#222222"
+-- myNormalBorderColor = "#222222"
+myNormalBorderColor = "#202020"
 
-myFocusedBorderColor = "#808080"
+-- myFocusedBorderColor = "#4f4f4f"
+myFocusedBorderColor = "#393939"
 
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
@@ -74,18 +74,22 @@ myShowWNameTheme :: SWNConfig
 myShowWNameTheme = def
     { swn_font              = "xft:JetBrains Mono Nerd Font:Regular:size=120"
     , swn_fade              = 0.5
-    , swn_bgcolor           = "#1D2021"
-    , swn_color             = "#ffffff"
+    , swn_bgcolor           = "#161616"
+    , swn_color             = "#cfcfcf"
     }
+
 
 myTabConfig = def
                 { fontName            = "xft:Inter:regular:size=11:antialias=true:hinting=true"
-                 , activeColor         = "#636363"
+                 , activeColor         = "#161616"
                  , inactiveColor       = "#1D2021"
-                 , activeBorderColor   = "#636363"
+                 , activeBorderColor   = "#161616"
                  , inactiveBorderColor = "#1D2021"
-                 , activeTextColor     = "#000000"
+                 , activeTextColor     = "#ffffff"
                  , inactiveTextColor   = "#d0d0d0"
+                 , activeBorderWidth = 0
+                 , inactiveBorderWidth = 0
+                 , urgentBorderWidth = 0
                  -- , activeColor         = "#1D2021"
                  -- , inactiveColor       = "#161616"
                  -- , activeBorderColor   = "#1D2021"
@@ -119,13 +123,13 @@ myScratchPads = [ NS "terminal" openTerminal isTerminal centerFloat
                 , NS "music" openMusic isMusic centerFloat
                 ] where
                     openTerminal = myTerminal ++ " -t scratchpad"
-                    isTerminal = title=? "scratchpad"
+                    isTerminal = title =? "scratchpad"
                     centerFloat = customFloating $ W.RationalRect l t w h
                         where 
-                            h = 0.9
-                            w = 0.9
-                            t = 0.95 -h
-                            l = 0.95 -w
+                            h = 0.7
+                            w = 0.7 -- use 0.9 for bigger
+                            t = 0.85 -h -- with 0.9 h,w use 0.95 -h,w
+                            l = 0.85 -w
 
                     openDiscord = "discord"
                     isDiscord = className =? "discord"
@@ -139,10 +143,11 @@ myStartupHook :: X ()
 myStartupHook = do
     setWMName "LG3D"
     spawnOnce "xsetroot -cursor_name left_ptr"
-    spawnOnce "exec ~/.bin/volume-watcher | xob &"
+    spawnOnce "kmonad ~/.config/kmonad/60coldh.kbd &"
+    spawnOnce "exec ~/.local/bin/pulse-volume-watcher.py | xob &"
     spawnOnce "mpd &"
     -- spawn "nitrogen --random /home/vatsal/Pictures/Wallpapers/Black --set-scaled &"
-    spawn "nitrogen --set-scaled /home/vatsal/Pictures/Wallpapers/Black/black_leaves.png &"
+    spawn "nitrogen --restore &"
     -- spawn "exec ~/.bin/eww daemon"
     spawn "exec ~/.config/polybar/launch.sh"
     -- spawnOnce "tint2 -c .config/tint2/vertical.tint2rc"
@@ -155,7 +160,10 @@ myStartupHook = do
 
 
 ------------------------------------------------------------------
---
+--Makes setting the spacingRaw simpler to write. The spacingRaw module adds a configurable amount of space around windows.
+mySpacingalt :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
+mySpacingalt i = spacingRaw False (Border i i i i) True (Border i i i i) True
+
 -- Below is a variation of the above except no borders are applied
 -- if fewer than two windows. So a single window has no gaps.
 mySpacing :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
@@ -166,43 +174,33 @@ mySpacing i = spacingRaw True (Border i i i i) True (Border i i i i) True
 
 tall = renamed [Replace "tall"]
         $ smartBorders
-        $ windowNavigation 
+        -- culprit here for borders fuck is windowNavigation
+        -- but without it tab sublayout doesnt work
+        -- TODO find a fix for this 
         -- sublayouts
         $ addTabs shrinkText myTabConfig
-        $ subLayout [] (smartBorders Simplest)
-        -- make sure do not add  below this
+        $ subLayout [] ( Simplest) -- make sure do not add  below this
         -- might be a placebo but when fked with the order of mySpacing 
         -- it adds spacing between tabs of tabbed sublayout (idk for real tho)
-        $ mySpacing 10
+        $ mySpacingalt 10
         $ ResizableTall 1 (3/100) (1/2) []
-
-eBSP = renamed [Replace "emptyBSP"]
-            $ smartBorders
-            $ windowNavigation
-            $ addTabs shrinkText myTabConfig
-            $ subLayout [] (smartBorders Simplest)
-            $ mySpacing 5
-            $ emptyBSP
-
 
 threeCol = renamed [Replace "threeCol"]
             $ smartBorders
-            $ windowNavigation
-            $ addTabs shrinkText myTabConfig
-            $ subLayout [] (smartBorders Simplest)
-            $ mySpacing 10
+            $ addTabs shrinkText myTabConfig 
+            $ subLayout [] ( Simplest )
+            $ mySpacingalt 10
             $ ThreeColMid 1 (3/100) (1/2)
 
 tabs = renamed [Replace "tabs"]
+        $ noBorders
         $ tabbed shrinkText myTabConfig
 
-
+-- myLayoutHook =  ResizableTall 1 (3/100) (1/2) [] 
 -- myLayoutHook =  ResizableTall 1 (3/100) (1/2) [] ||| noBorders Full ||| simpleFloat ||| tabbed shrinkText myTabConfig ||| ThreeCol 1 (3/100) (1/2) ||| ThreeColMid 1 (3/100) (1/2)
-
-myLayoutHook = avoidStruts $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefLayout
-                where 
-                    myDefLayout =   tall
-                                ||| eBSP
+myLayoutHook =  avoidStruts $ configurableNavigation noNavigateBorders $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
+                where
+                  myDefaultLayout = tall
                                 ||| threeCol
                                 ||| tabs
 
@@ -244,8 +242,6 @@ forceCenterFloat = doFloatDep move
     y = (1-h)/2
 
 --------------------------------------------------------------------
--- myHandleEventHook = swallowEventHook (className =? "Alacritty") (return True)
-
 
 myKeys :: [(String, X ())]
 myKeys =
@@ -258,8 +254,17 @@ myKeys =
         , ("M-S-<Backspace>", confirmPrompt hotPromptTheme "kill all" $ killAll)
 
         , ("M-<Return>", spawn (myTerminal))
-        , ("M1-<Space>", spawn "rofi  -show drun -modi run,drun,window  -drun-icon-theme \"Papirus-Dark\" " )
+        , ("M1-<Space>", spawn "rofi  -show drun -drun-icon-theme \"Papirus-Dark\" " )
         , ("M-S-<Return>", spawn "rofi -show window -modi run,drun,window  -window-icon-theme \"Papirus-Dark\" ")
+
+        -- , ("M-j", sendMessage $ Go D)
+        -- , ("M-k", sendMessage $ Go U)
+        -- , ("M-h", sendMessage $ Go L)
+        -- , ("M-l", sendMessage $ Go R)
+        -- , ("M-S-j", sendMessage $ Swap D)
+        -- , ("M-S-k", sendMessage $ Swap U)
+        -- , ("M-S-h", sendMessage $ Swap R)
+        -- , ("M-S-l", sendMessage $ Swap L)
 
         , ("M-h", sendMessage Shrink)   -- Shrink horiz window width
         , ("M-l", sendMessage Expand)   -- Expand horiz window width
@@ -292,25 +297,27 @@ myKeys =
         , ("M1-b", sendMessage ToggleStruts <+> spawn "polybar-msg cmd toggle") 
         -- , ("M1-b", spawn "polybar-msg cmd toggle") 
         -- toggles full mode ( defined earlier as mkToggle)
-        , ("M-<Space>", sendMessage $ Toggle NBFULL )
+        -- , ("M-<Space>", sendMessage $ Toggle NBFULL)
+        , ("M-<Space>", sendMessage (Toggle NBFULL) >> sendMessage ToggleStruts)
         -- toggles "gaps" = screenspace + window space
         , ("M1-g", toggleScreenSpacingEnabled <+> toggleWindowSpacingEnabled )
         -- , ("M1-S-g", toggleWindowSpacingEnabled)
 
         -- SCRIPTS
-        -- , ("M-<Esc>", spawn "~/.bin/lock.sh")            -- lock script
-        , ("M-<Esc>", spawn "betterlockscreen -l dim")            --using betterlockscreen
-        , ("M-S-<Esc>", spawn "~/.bin/powermenu")        -- rofi powermenu
-        , ("<Print>", spawn "~/.bin/screenshot ssfull")         --screenshot
-        , ("S-<Print>", spawn "~/.bin/screenshot ssselect") --select screenshot
-        , ("C-<Print>", spawn "~/.bin/screenshot ssclip") --copy screenshot to clipboard
+        , ("M-<Esc>", spawn "~/.local/bin/lock.sh")            -- lock script
+        -- , ("M-<Esc>", spawn "betterlockscreen -l dim")  --using betterlockscreen
+        , ("M-S-<Esc>", spawn "~/.local/bin/powermenu")   -- rofi powermenu
+        , ("<Print>", spawn "~/.local/bin/screenshot ssfull")  --screenshot
+        , ("S-<Print>", spawn "~/.local/bin/screenshot ssselect") --select screenshot
+        , ("C-<Print>", spawn "~/.local/bin/screenshot ssclip") --copy screenshot to clipboard
         -- uncomment these for dunst volume bar
-        -- , ("<XF86AudioMute>", spawn "sh ~/.bin/volumeControl.sh mute")       --toggle mute
-        -- , ("<XF86AudioLowerVolume>", spawn "sh ~/.bin/volumeControl.sh down")
-        -- , ("<XF86AudioRaiseVolume>", spawn "sh ~/.bin/volumeControl.sh up") -- inc volume 5%
         , ("<XF86AudioMute>", spawn "pamixer -t")       --toggle mute
         , ("<XF86AudioLowerVolume>", spawn "pamixer --decrease 5") -- dec volume 5%
         , ("<XF86AudioRaiseVolume>", spawn "pamixer --increase 5") -- inc volume 5%
+        , ("C-<Esc>", spawn "dunstctl history-pop") -- show past notifications
+        -- , ("<XF86AudioMute>", spawn "~/.local/bin/volume mute")       --toggle mute
+        -- , ("<XF86AudioLowerVolume>", spawn "~/.local/bin/volume down") -- dec volume 5%
+        -- , ("<XF86AudioRaiseVolume>", spawn "~/.local/bin/volume up") -- inc volume 5%
         , ("<XF86MonBrightnessUp>", spawn "brightnessctl s +1%") -- inc brightness 1%
         , ("<XF86MonBrightnessDown>", spawn "brightnessctl s 1%-") --dec brightness 1%
 
@@ -324,7 +331,7 @@ main = xmonad $ ewmh def
     , terminal = myTerminal
     , borderWidth = myBorderWidth
     -- spacingRaw ... part below adds spacing with smart spacing and smart borders
-    -- , layoutHook = showWName' myShowWNameTheme $ spacingRaw True (Border 10 10 10 10) True (Border 10 10 10 10) True $ myLayoutHook
+    -- ,layoutHook = showWName' myShowWNameTheme $ spacingRaw True (Border 10 10 10 10) True (Border 10 10 10 10) True $ myLayoutHook
     , layoutHook = showWName' myShowWNameTheme $ myLayoutHook
     , normalBorderColor  = myNormalBorderColor
     , focusedBorderColor = myFocusedBorderColor
@@ -332,11 +339,4 @@ main = xmonad $ ewmh def
     , startupHook = myStartupHook
     , workspaces = myWorkspaces
     , handleEventHook = docksEventHook
-
-
     } `additionalKeysP` myKeys
-
-
-    
-
-
