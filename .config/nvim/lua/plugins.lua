@@ -13,7 +13,7 @@ return require('packer').startup(function()
   use {
       'morhetz/gruvbox',
       config = function ()
-          require "plugins.gruvbox"
+          require "plugins.colorscheme"
       end
   }
 
@@ -33,6 +33,7 @@ return require('packer').startup(function()
   }
   use {'hrsh7th/cmp-nvim-lsp'}
   use {'hrsh7th/cmp-buffer'}
+  use {'hrsh7th/cmp-path'}
   use {'hrsh7th/cmp-vsnip',
         config = function ()
             require "plugins.vsnip"
@@ -63,14 +64,14 @@ return require('packer').startup(function()
       end
   }
 
-  use {
-      'nvim-lualine/lualine.nvim',
-      requires = {'kyazdani42/nvim-web-devicons', opt =true},
-      config = function ()
-          require "plugins.lualine"
-      end
+  -- use {
+  --     'nvim-lualine/lualine.nvim',
+  --     requires = {'kyazdani42/nvim-web-devicons', opt =true},
+  --     config = function ()
+  --         require "plugins.lualine"
+  --     end
 
-  }
+  -- }
   use {
       'akinsho/bufferline.nvim',
       requires = 'kyazdani42/nvim-web-devicons',
@@ -103,6 +104,21 @@ return require('packer').startup(function()
       end,
   }
 
+  use {
+      "folke/zen-mode.nvim",
+      cmd = "ZenMode",
+      config = function ()
+          require("plugins.zenmode")
+      end
+  }
+
+  use{
+      "akinsho/toggleterm.nvim",
+      config = function ()
+          require("toggleterm").setup()
+      end
+  }
+
 
   -- Lazy loading:
   -- Load on specific commands
@@ -111,4 +127,3 @@ return require('packer').startup(function()
   -- Load on an autocommand event
   --use {'andymass/vim-matchup', event = 'VimEnter'}
 end)
-

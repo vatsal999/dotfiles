@@ -1,4 +1,3 @@
---vim.cmd [[highlight NvimTreeNormal guifg=#D8DEE9  guibg=#2a2e39]]
 vim.g.nvim_tree_icons = {
    default = "",
    symlink = "",
@@ -23,12 +22,13 @@ vim.g.nvim_tree_icons = {
    },
 }
 
+
 require'nvim-tree'.setup {
   disable_netrw       = true,
   hijack_netrw        = true,
   open_on_setup       = false,
   ignore_ft_on_setup  = {".git", "node_modules",".cache"},
-  auto_close          = false,
+  -- auto_close          = false,
   open_on_tab         = false,
   hijack_cursor       = false,
   update_cwd          = false,
@@ -75,7 +75,7 @@ require'nvim-tree'.setup {
     },
     number = false,
     relativenumber = false,
-    signcolumn = "yes"
+    signcolumn = "no"
   },
   trash = {
     cmd = "trash",
