@@ -1,40 +1,39 @@
-vim.g.nvim_tree_icons = {
-   default = "",
-   symlink = "",
-   git = {
-      deleted = "",
-      ignored = "◌",
-      renamed = "➜",
-      staged = "✓",
-      unmered = "",
-      unstaged = "✗",
-      untracked = "★",
-   },
-   folder = {
-      arrow_open = "",
-      arrow_closed = "",
-      default = "",
-      empty = "",
-      empty_open = "",
-      open = "",
-      symlink = "",
-      symlink_open = "",
-   },
-}
-
-
 require'nvim-tree'.setup {
   disable_netrw       = true,
   hijack_netrw        = true,
   open_on_setup       = false,
   ignore_ft_on_setup  = {".git", "node_modules",".cache"},
-  -- auto_close          = false,
   open_on_tab         = false,
   hijack_cursor       = false,
   update_cwd          = false,
-  update_to_buf_dir   = {
-    enable = true,
-    auto_open = true,
+
+  renderer = {
+    icons = {
+        glyphs = {
+           default = "",
+           symlink = "",
+           git = {
+              deleted = "",
+              ignored = "◌",
+              renamed = "➜",
+              staged = "✓",
+              unmerged = "",
+              unstaged = "✗",
+              untracked = "★",
+           },
+           folder = {
+              arrow_open = "",
+              arrow_closed = "",
+              default = "",
+              empty = "",
+              empty_open = "",
+              open = "",
+              symlink = "",
+              symlink_open = "",
+       },
+    },
+}
+
   },
   diagnostics = {
     enable = false,
@@ -59,16 +58,15 @@ require'nvim-tree'.setup {
     custom = {}
   },
   git = {
-    enable = true,
+    enable = false,
     ignore = true,
     timeout = 500,
   },
   view = {
     width = 30,
-    height = 30,
+    adaptive_size = true,
     hide_root_folder = false,
     side = 'left',
-    auto_resize = false,
     mappings = {
       custom_only = false,
       list = {}
