@@ -41,15 +41,26 @@ lspSymbol("Hint", "")
 lspSymbol("Warn", "")
 
 vim.diagnostic.config {
-   virtual_text = {
-      prefix = "",
-      spacing = 5,
-   },
-   -- virtual_text = false,
+   -- virtual_text = {
+   --    prefix = "",
+   --    spacing = 5,
+   -- },
+   virtual_text = false,
    signs = true,
    underline = true,
    update_in_insert = false,
+   float = {
+       focusable = false,
+   }
 }
+
+vim.api.nvim_create_autocmd("InsertEnter", {
+	callback = function()
+		if vim.lsp.buf.server_ready() then
+			vim.diagnostic.open_float()
+		end
+	end,
+})
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
    border = "single",

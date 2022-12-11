@@ -4,11 +4,24 @@ require'nvim-tree'.setup {
   open_on_setup       = false,
   ignore_ft_on_setup  = {".git", "node_modules",".cache"},
   open_on_tab         = false,
-  hijack_cursor       = false,
+  hijack_cursor       = true,
   update_cwd          = false,
 
   renderer = {
+      indent_markers = {
+          enable = true,
+          inline_arrows = false,
+          icons = {
+            corner = "└",
+            edge = "│",
+            item = "│",
+            none = " ",
+          },
+        },
     icons = {
+        show = {
+            folder_arrow = false,
+        },
         glyphs = {
            default = "",
            symlink = "",
@@ -22,8 +35,8 @@ require'nvim-tree'.setup {
               untracked = "★",
            },
            folder = {
-              arrow_open = "",
-              arrow_closed = "",
+              arrow_open = "",
+              arrow_closed = "",
               default = "",
               empty = "",
               empty_open = "",
