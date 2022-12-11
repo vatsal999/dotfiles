@@ -55,4 +55,89 @@ return require('packer').startup(function(use)
   }
 
   use {'hrsh7th/vim-vsnip', after = "nvim-cmp"}
+
+  use {
+      'nvim-treesitter/nvim-treesitter',
+      event = "BufRead",
+       run = ':TSUpdate',
+       config = function ()
+           require "plugins.treesitter"
+       end
+  }
+
+  use {
+      'williamboman/nvim-lsp-installer',
+  }
+
+  use {
+      'nvim-telescope/telescope.nvim',
+      requires = {{ "nvim-lua/popup.nvim" }, {"nvim-lua/plenary.nvim"}},
+      cmd = "Telescope",
+      config = function ()
+          require "plugins.telescope"
+      end
+  }
+
+  use {
+      'nvim-lualine/lualine.nvim',
+      requires = {'kyazdani42/nvim-web-devicons', opt =true},
+      config = function ()
+          require "plugins.lualine"
+      end
+
+  }
+  use {
+      'akinsho/bufferline.nvim',
+      requires = 'kyazdani42/nvim-web-devicons',
+      config = function ()
+          require "plugins.bufferline"
+      end
+  }
+
+  use {
+      'kyazdani42/nvim-tree.lua',
+      requires = {'kyazdani42/nvim-web-devicons',},
+      cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+      config = function ()
+          require "plugins.nvimtree"
+      end
+
+  }
+  use {
+      'numToStr/Comment.nvim',
+      keys = { "gc", "gb" },
+      config = function ()
+          require "plugins.Comment"
+      end
+  }
+
+  use {
+      "lukas-reineke/indent-blankline.nvim",
+      config = function ()
+          require "plugins.indent"
+      end
+  }
+  use {
+	"windwp/nvim-autopairs",
+    after = "nvim-cmp",
+    config = function()
+        require("nvim-autopairs").setup {}
+    end
+}
+
+  use {
+      "norcalli/nvim-colorizer.lua",
+      cmd = "ColorizerToggle",
+      config = function()
+         require("plugins.colorizer")
+      end,
+  }
+  use {
+      "Pocco81/true-zen.nvim",
+      cmd = {"TZMinimalist", "TZAtaraxis", "TZFocus"},
+      config = function ()
+          require("plugins.zenmode")
+      end
+  }
+
 end)
