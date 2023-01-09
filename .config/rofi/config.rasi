@@ -1,7 +1,7 @@
 configuration {
-	theme: "~/.config/rofi/Custom.rasi";
     show-icons: true; 
     icon-theme: "Papirus";
     terminal: "/usr/bin/alacritty";
-    modi: "window,drun,run,keys,file-browser";
+    modi: "window,drun,run,keys";
 }
+@theme "~/.config/rofi/theme.rasi"
