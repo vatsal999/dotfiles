@@ -37,6 +37,3 @@ elif [ $color = "Faded" ]; then
 fi
 
 notify-send "$color" "Theme changed to $color"
-
-
-
