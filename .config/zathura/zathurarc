@@ -1,0 +1,40 @@
+set font "Inter 12"
+
+set window-title-home-tilde "true"
+set statusbar-basename "true"
+set selection-clipboard "clipboard"
+
+set default-bg "#1d2021"
+set default-fg "#ebdbb2"
+
+set statusbar-fg "#ebdbb2"
+set statusbar-bg "#282828"
+
+set inputbar-bg "#1d2021"
+set inputbar-fg "#ebdbb2"
+
+set notification-bg "#1d2021"
+set notification-fg "#ebdbb2"
+
+set notification-error-bg "#1d2021"
+set notification-error-fg "#cc241d"
+
+set notification-warning-bg "#1d2021"
+set notification-warning-fg "#cc241d"
+
+set highlight-color "#d79921"
+set highlight-active-color "#458588"
+
+set completion-bg "#1d2021"
+set completion-fg "#458588"
+
+set completion-highlight-fg "#ebdbb2"
+set completion-highlight-bg "#458588"
+
+set recolor-lightcolor "#1d2021"
+set recolor-darkcolor "#ebdbb2"
+
+set recolor "true"
+set recolor-keephue "true"
+
+# vim:ft=conf

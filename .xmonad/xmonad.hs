@@ -22,6 +22,7 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.SetWMName
+import XMonad.Hooks.WindowSwallowing
 
 import qualified XMonad.StackSet as W
 import XMonad.ManageHook
@@ -31,6 +32,7 @@ import XMonad.Actions.RotSlaves
 import XMonad.Actions.WithAll
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.MouseResize
+import XMonad.Actions.DynamicProjects
 
 import XMonad.Prompt 
 import XMonad.Prompt.ConfirmPrompt
@@ -59,25 +61,25 @@ import XMonad.Util.NamedWindows  --window titles in tabbed layout
 import XMonad.Util.WindowProperties
 
 myTerminal = "alacritty"
+myBrowser = "firefox"
 
 myBorderWidth = 3
 
 -- myNormalBorderColor = "#222222"
-myNormalBorderColor = "#202020"
+myNormalBorderColor = "#282828"
 
 -- myFocusedBorderColor = "#4f4f4f"
-myFocusedBorderColor = "#393939"
+myFocusedBorderColor = "#3c3836"
 
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 myShowWNameTheme :: SWNConfig
 myShowWNameTheme = def
-    { swn_font              = "xft:JetBrains Mono Nerd Font:Regular:size=120"
+    { swn_font              = "xft:FiraCode Nerd Font:Regular:size=120"
     , swn_fade              = 0.5
     , swn_bgcolor           = "#161616"
     , swn_color             = "#cfcfcf"
     }
-
 
 myTabConfig = def
                 { fontName            = "xft:Inter:regular:size=11:antialias=true:hinting=true"
@@ -137,27 +139,35 @@ myScratchPads = [ NS "terminal" openTerminal isTerminal centerFloat
                     openMusic = myTerminal ++ " -t ncmpcpp" ++ " -e ncmpcpp"
                     isMusic = title =? "ncmpcpp"
 
+projects :: [Project]
+projects = 
+    [ Project { projectName = "uni"
+              , projectDirectory = "~/Documents"
+              , projectStartHook = Just $ do spawn myTerminal
+                                             spawn "google-chrome-stable"
+              }
+    ]
 
 -- STARTUP -------------------------------------------------------
 myStartupHook :: X ()
 myStartupHook = do
     setWMName "LG3D"
     spawnOnce "xsetroot -cursor_name left_ptr"
+    spawnOnce "setxkbmap -option caps:escape"
+    spawnOnce "setxkbmap us -variant colemak_dh"
     spawnOnce "kmonad ~/.config/kmonad/60coldh.kbd &"
-    spawnOnce "exec ~/.local/bin/pulse-volume-watcher.py | xob &"
+    --spawnOnce "exec ~/.local/bin/pulse-volume-watcher.py | xob &"
     spawnOnce "mpd &"
-    -- spawn "nitrogen --random /home/vatsal/Pictures/Wallpapers/Black --set-scaled &"
     spawn "nitrogen --restore &"
     -- spawn "exec ~/.bin/eww daemon"
     spawn "exec ~/.config/polybar/launch.sh"
     -- spawnOnce "tint2 -c .config/tint2/vertical.tint2rc"
     -- spawnOnce "tint2 -c .config/tint2/systray.tint2rc"
     spawnOnce "dunst &"
-    spawnOnce "flashfocus &"
+    --spawnOnce "flashfocus &"
     spawnOnce "picom  &"
-    -- spawnOnce "optimus-manager-qt &"
-    -- spawnOnce "nm-applet &"
-
+    spawnOnce "blueman-applet &"
+    spawnOnce "nm-applet &"
 
 ------------------------------------------------------------------
 --Makes setting the spacingRaw simpler to write. The spacingRaw module adds a configurable amount of space around windows.
@@ -174,10 +184,6 @@ mySpacing i = spacingRaw True (Border i i i i) True (Border i i i i) True
 
 tall = renamed [Replace "tall"]
         $ smartBorders
-        -- culprit here for borders fuck is windowNavigation
-        -- but without it tab sublayout doesnt work
-        -- TODO find a fix for this 
-        -- sublayouts
         $ addTabs shrinkText myTabConfig
         $ subLayout [] ( Simplest) -- make sure do not add  below this
         -- might be a placebo but when fked with the order of mySpacing 
@@ -196,8 +202,6 @@ tabs = renamed [Replace "tabs"]
         $ noBorders
         $ tabbed shrinkText myTabConfig
 
--- myLayoutHook =  ResizableTall 1 (3/100) (1/2) [] 
--- myLayoutHook =  ResizableTall 1 (3/100) (1/2) [] ||| noBorders Full ||| simpleFloat ||| tabbed shrinkText myTabConfig ||| ThreeCol 1 (3/100) (1/2) ||| ThreeColMid 1 (3/100) (1/2)
 myLayoutHook =  avoidStruts $ configurableNavigation noNavigateBorders $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
                 where
                   myDefaultLayout = tall
@@ -257,14 +261,15 @@ myKeys =
         , ("M1-<Space>", spawn "rofi  -show drun -drun-icon-theme \"Papirus-Dark\" " )
         , ("M-S-<Return>", spawn "rofi -show window -modi run,drun,window  -window-icon-theme \"Papirus-Dark\" ")
 
-        -- , ("M-j", sendMessage $ Go D)
-        -- , ("M-k", sendMessage $ Go U)
-        -- , ("M-h", sendMessage $ Go L)
-        -- , ("M-l", sendMessage $ Go R)
-        -- , ("M-S-j", sendMessage $ Swap D)
-        -- , ("M-S-k", sendMessage $ Swap U)
-        -- , ("M-S-h", sendMessage $ Swap R)
-        -- , ("M-S-l", sendMessage $ Swap L)
+        -- requires windowNavigation
+        , ("M-n", sendMessage $ Go D)
+        , ("M-e", sendMessage $ Go U)
+        , ("M-m", sendMessage $ Go L)
+        , ("M-i", sendMessage $ Go R)
+        , ("M-S-n", sendMessage $ Swap D)
+        , ("M-S-e", sendMessage $ Swap U)
+        , ("M-S-m", sendMessage $ Swap L)
+        , ("M-S-i", sendMessage $ Swap R)
 
         , ("M-h", sendMessage Shrink)   -- Shrink horiz window width
         , ("M-l", sendMessage Expand)   -- Expand horiz window width
@@ -292,6 +297,10 @@ myKeys =
         , ("M1-t", namedScratchpadAction myScratchPads "terminal")
         , ("M1-c", namedScratchpadAction myScratchPads "discord")
         , ("M1-m", namedScratchpadAction myScratchPads "music")
+
+        -- PROJECTS
+        , ("M-x", switchProjectPrompt myPromptTheme)
+        , ("M-S-x", shiftToProjectPrompt myPromptTheme)
          
         -- toggles polybar and adds struts while doing so
         , ("M1-b", sendMessage ToggleStruts <+> spawn "polybar-msg cmd toggle") 
@@ -304,8 +313,8 @@ myKeys =
         -- , ("M1-S-g", toggleWindowSpacingEnabled)
 
         -- SCRIPTS
-        , ("M-<Esc>", spawn "~/.local/bin/lock.sh")            -- lock script
-        -- , ("M-<Esc>", spawn "betterlockscreen -l dim")  --using betterlockscreen
+        -- , ("M-<Esc>", spawn "~/.local/bin/lock.sh")            -- lock script
+        , ("M-<Esc>", spawn "betterlockscreen -l dim")  --using betterlockscreen
         , ("M-S-<Esc>", spawn "~/.local/bin/powermenu")   -- rofi powermenu
         , ("<Print>", spawn "~/.local/bin/screenshot ssfull")  --screenshot
         , ("S-<Print>", spawn "~/.local/bin/screenshot ssselect") --select screenshot
@@ -320,12 +329,10 @@ myKeys =
         -- , ("<XF86AudioRaiseVolume>", spawn "~/.local/bin/volume up") -- inc volume 5%
         , ("<XF86MonBrightnessUp>", spawn "brightnessctl s +1%") -- inc brightness 1%
         , ("<XF86MonBrightnessDown>", spawn "brightnessctl s 1%-") --dec brightness 1%
-
-
         ]
 
 main :: IO ()
-main = xmonad $ ewmh def
+main = xmonad $ ewmh . docks $ dynamicProjects projects $ def
     {
       modMask = mod4Mask 
     , terminal = myTerminal
@@ -333,10 +340,10 @@ main = xmonad $ ewmh def
     -- spacingRaw ... part below adds spacing with smart spacing and smart borders
     -- ,layoutHook = showWName' myShowWNameTheme $ spacingRaw True (Border 10 10 10 10) True (Border 10 10 10 10) True $ myLayoutHook
     , layoutHook = showWName' myShowWNameTheme $ myLayoutHook
+    , handleEventHook = swallowEventHook (className =? "Alacritty") (return True)
     , normalBorderColor  = myNormalBorderColor
     , focusedBorderColor = myFocusedBorderColor
     , manageHook = myManageHook <+> manageDocks
     , startupHook = myStartupHook
     , workspaces = myWorkspaces
-    , handleEventHook = docksEventHook
     } `additionalKeysP` myKeys
