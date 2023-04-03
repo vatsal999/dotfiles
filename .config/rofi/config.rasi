@@ -1,6 +1,24 @@
 configuration {
+      font: "Inter Medium 14";
+
+      drun {
+        display-name: ">";
+      }
+
+      run {
+        display-name: "Run:";
+      }
+
+      window {
+        display-name: "Window:";
+      }
+
+      timeout {
+        delay: 10;
+        action: "kb-cancel";
+    }
     show-icons: true; 
-    icon-theme: "Papirus";
+    icon-theme: "Papirus-Dark";
     terminal: "/usr/bin/alacritty";
     modi: "window,drun,run,keys";
 }
