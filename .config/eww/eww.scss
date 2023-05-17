@@ -1,0 +1,67 @@
+@import "./scss/variables";
+
+* {
+    all: unset;
+}
+
+tooltip {
+    background-color: $secondary_bg;
+}
+
+window {
+    color: #ffffff;
+    font-family: "Inter";
+}
+
+.dashwindow {
+    background-color: #1d2021;
+    padding: 10px;
+    border-radius: 20px;
+    .datetime {
+        margin: 20px 0 0 0;
+        .time {
+            color: $primary_fg;
+            font-family: $ui_font;
+            font-size: 75px;
+        }
+        .date {
+            color: $primary_fg;
+            font-family: $ui_font;
+            font-size: 20px;
+        }
+    }
+    .sliders {
+        margin: 50px 0 0 20px;
+        .volume-slider {
+            .slider-icon {
+                padding: 0 10px 0 0;
+                margin:  0 10px 0 0;
+                font-family: $icon_font;
+                font-size: 25px;
+            }
+
+            scale {
+                marks {
+                    mark {
+                        indicator {
+                            min-height: 10px;
+                            min-width: 10px;
+                        }
+                    }
+                }
+                trough {
+                    min-width: 400px;
+                    min-height: 15px;
+                    border-radius: 20px;
+                    background-color: $secondary_bg;
+
+                    highlight {
+                        background-image: linear-gradient(to right, $red, $light_red);
+                        border-radius: 20px;
+                    }
+                }
+            }
+        }
+    }
+
+}
