@@ -66,6 +66,14 @@ return require('packer').startup(function(use)
   }
 
   use {
+      'lukas-reineke/indent-blankline.nvim',
+      after = "nvim-treesitter",
+      config = function ()
+          require "plugins.indent_blankline"
+      end
+  }
+
+  use {
       'williamboman/nvim-lsp-installer',
   }
 
@@ -111,12 +119,6 @@ return require('packer').startup(function(use)
       end
   }
 
-  use {
-      "lukas-reineke/indent-blankline.nvim",
-      config = function ()
-          require "plugins.indent"
-      end
-  }
   use {
 	"windwp/nvim-autopairs",
     after = "nvim-cmp",

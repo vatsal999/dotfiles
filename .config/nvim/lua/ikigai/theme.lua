@@ -23,7 +23,7 @@ theme.loadSyntax = function()
 		Define = { fg = ikigai.red }, -- preprocessor #define
 		Macro = { fg = ikigai.red }, -- same as Define
 		Typedef = { fg = ikigai.yellow }, -- A typedef
-		PreCondit = { fg = ikigai.orange }, -- preprocessor #if, #else, #endif, etc.
+		PreCondit = { fg = ikigai.red }, -- preprocessor #if, #else, #endif, etc.
 		Special = { fg = ikigai.green }, -- any special symbol
 		SpecialChar = { fg = ikigai.green }, -- special character in a constant
 		Tag = { fg = ikigai.purple }, -- you can use CTRL-] on this
@@ -53,7 +53,7 @@ theme.loadSyntax = function()
 	-- Italic comments
 	if vim.g.ikigai_italic == false then
 		syntax.Comment = { fg = ikigai.brightbg2 } -- normal comments
-		syntax.Conditional = { fg = ikigai.ikigai9_gui } -- normal if, then, else, endif, switch, etc.
+		syntax.Conditional = { fg = ikigai.red } -- normal if, then, else, endif, switch, etc.
 		syntax.Function = { fg = ikigai.yellow } -- normal function names
 		syntax.Identifier = { fg = ikigai.yellow } -- any variable name
 		syntax.Keyword = { fg = ikigai.red } -- normal for, do, while, etc.
@@ -61,7 +61,7 @@ theme.loadSyntax = function()
 		syntax.String = { fg = ikigai.green } -- any string
 	else
 		syntax.Comment = { fg = ikigai.brightbg2 , bg = ikigai.none, style = "italic" } -- italic comments
-		syntax.Conditional = { fg = ikigai.ikigai9_gui, bg = ikigai.none, style = "italic" } -- italic if, then, else, endif, switch, etc.
+		syntax.Conditional = { fg = ikigai.red, bg = ikigai.none, style = "italic" } -- italic if, then, else, endif, switch, etc.
 		syntax.Function = { fg = ikigai.yellow, bg = ikigai.none, style = "italic" } -- italic funtion names
 		syntax.Identifier = { fg = ikigai.yellow, bg = ikigai.none, style = "italic" } -- any variable name
 		syntax.Keyword = { fg = ikigai.red, bg = ikigai.none, style = "italic" } -- italic for, do, while, etc.
@@ -94,7 +94,7 @@ theme.loadEditor = function()
 		IncSearch = { fg = ikigai.bg, bg = ikigai.yellow },
 		LineNr = { fg = ikigai.brightbg2 },
 		CursorLineNr = { fg = ikigai.fg, bg = ikigai.brightbg },
-		MatchParen = { fg = ikigai.ikigai15_gui, bg = ikigai.none, style = "bold" },
+		MatchParen = { fg = ikigai.yellow, bg = ikigai.none, style = "bold" },
 		ModeMsg = { fg = ikigai.ikigai4_gui },
 		MoreMsg = { fg = ikigai.ikigai4_gui },
 		NonText = { fg = ikigai.ikigai1_gui },
@@ -202,21 +202,21 @@ theme.loadTreeSitter = function()
 		TSAnnotation = { fg = ikigai.ikigai12_gui }, -- For C++/Dart attributes, annotations thatcan be attached to the code to denote some kind of meta information.
 		TSConstructor = { fg = ikigai.ikigai9_gui }, -- For constructor calls and definitions: `= { }` in Lua, and Java constructors.
 		TSConstant = { fg = ikigai.dessert }, -- For constants
-		TSFloat = { fg = ikigai.dessert }, -- For floats
-		TSNumber = { fg = ikigai.dessert }, -- For all number
+		TSFloat = { fg = ikigai.fg }, -- For floats
+		TSNumber = { fg = ikigai.fg }, -- For all number
 
 		TSAttribute = { fg = ikigai.ikigai15_gui }, -- (unstable) TODO: docs
 		TSVariable = { fg = ikigai.fg }, -- Any variable name that does not have another highlight.
 		TSVariableBuiltin = { fg = ikigai.ikigai4_gui, style = "bold" },
-		TSBoolean = { fg = ikigai.dessert, style = "bold" }, -- For booleans.
+		TSBoolean = { fg = ikigai.fg, style = "bold" }, -- For booleans.
 		TSConstBuiltin = { fg = ikigai.ikigai7_gui, style = "bold" }, -- For constant that are built in the language: `nil` in Lua.
-		TSConstMacro = { fg = ikigai.ikigai7_gui, style = "bold" }, -- For constants that are defined by macros: `NULL` in C.
+		TSConstMacro = { fg = ikigai.red, style = "bold" }, -- For constants that are defined by macros: `NULL` in C.
 		TSError = { fg = ikigai.brightbg2 }, -- For syntax/parser errors.
 		TSException = { fg = ikigai.ikigai15_gui }, -- For exception related keywords.
 		TSFuncMacro = { fg = ikigai.ikigai7_gui }, -- For macro defined fuctions (calls and definitions): each `macro_rules` in Rust.
 		TSInclude = { fg = ikigai.blue }, -- For includes: `#include` in C, `use` or `extern crate` in Rust, or `require` in Lua.
 		TSLabel = { fg = ikigai.ikigai15_gui }, -- For labels: `label:` in C and `:label:` in Lua.
-		TSOperator = { fg = ikigai.dessert }, -- For any operator: `+`, but also `->` and `*` in C.
+		TSOperator = { fg = ikigai.blue }, -- For any operator: `+`, but also `->` and `*` in C.
 		TSParameter = { fg = ikigai.blue }, -- For parameters of a function.
 		TSParameterReference = { fg = ikigai.ikigai10_gui }, -- For references to parameters of a function.
 		TSPunctDelimiter = { fg = ikigai.fg }, -- For delimiters ie: `.`
@@ -226,7 +226,7 @@ theme.loadTreeSitter = function()
 		TSType = { fg = ikigai.orange }, -- For types.
 		TSTypeBuiltin = { fg = ikigai.ikigai9_gui }, -- For builtin types.
 		TSTag = { fg = ikigai.orange }, -- Tags like html tag names.
-		TSTagDelimiter = { fg = ikigai.ikigai15_gui }, -- Tag delimiter like `<` `>` `/`
+		TSTagDelimiter = { fg = ikigai.blue }, -- Tag delimiter like `<` `>` `/`
 		TSText = { fg = ikigai.fg }, -- For strings consideikigai11_gui text in a markup language.
 		TSTextReference = { fg = ikigai.ikigai15_gui }, -- FIXME
 		TSEmphasis = { fg = ikigai.ikigai10_gui }, -- For text to be represented with emphasis.
@@ -235,15 +235,52 @@ theme.loadTreeSitter = function()
 		TSLiteral = { fg = ikigai.ikigai4_gui }, -- Literal text.
 		TSURI = { fg = ikigai.ikigai14_gui }, -- Any URI like a link or email.
 		TSAnnotation = { fg = ikigai.ikigai11_gui }, -- For C++/Dart attributes, annotations that can be attached to the code to denote some kind of meta information.
+
+        ["@constructor"] = { fg = ikigai.purple },
+		["@constant"] = { fg = ikigai.blue },
+		["@float"] = { fg = ikigai.purple },
+		["@number"] = { fg = ikigai.purple },
+		["@attribute"] = { fg = ikigai.blue },
+		["@variable"] = { fg = ikigai.fg},
+		["@variable.builtin"] = { fg = ikigai.red, style = "bold" },
+		["@variable.global"] = { fg = ikigai.fg, style = "bold" },
+		["@boolean"] = { fg = ikigai.purple, style = "bold" },
+		["@constant.builtin"] = { fg = ikigai.purple, style = "bold" },
+		["@constant.macro"] = { fg = ikigai.purple, style = "bold" },
+		["@error"] = { fg = ikigai.red },
+		["@exception"] = { fg = ikigai.blue },
+		["@function"] = { fg = ikigai.yellow },
+		["@function.macro"] = { fg = ikigai.red },
+		["@conditional"] = { fg = ikigai.red },
+		["@include"] = { fg = ikigai.blue },
+		["@label"] = { fg = ikigai.blue },
+		["@operator"] = { fg = ikigai.blue },
+		["@parameter"] = { fg = ikigai.fg },
+		["@punctuation.delimiter"] = { fg = ikigai.fg },
+		["@punctuation.bracket"] = { fg = ikigai.fg },
+		["@punctuation.special"] = { fg = ikigai.red },
+		["@symbol"] = { fg = ikigai.blue },
+		["@type"] = { fg = ikigai.orange },
+		["@type.builtin"] = { fg = ikigai.orange, style = "bold" },
+		["@tag"] = { fg = ikigai.red },
+		["@tag.delimiter"] = { fg = ikigai.blue },
+		["@text"] = { fg = ikigai.red },
+		["@text.reference"] = { fg = ikigai.blue },
+		["@text.emphasis"] = { fg = ikigai.blue },
+		["@text.underline"] = { fg = ikigai.red, style = "underline" },
+		["@text.title"] = { fg = ikigai.blue,  style = "bold" },
+		["@text.strong"] = { fg = ikigai.blue, style = "bold" },
+		["@text.literal"] = { fg = ikigai.red },
+		["@text.uri"] = { fg = ikigai.blue },
 	}
 
 	if vim.g.ikigai_italic == false then
 		-- Comments
 		treesitter.TSComment = { fg = ikigai.brightbg2 }
 		-- Conditionals
-		treesitter.TSConditional = { fg = ikigai.blue } -- For keywords related to conditionnals.
+		treesitter.TSConditional = { fg = ikigai.red } -- For keywords related to conditionnals.
 		-- Function names
-		treesitter.TSFunction = { fg = ikigai.yellow } -- For fuction (calls and definitions).
+		treesitter.TSFunction = { fg = ikigai.fg } -- For fuction (calls and definitions).
 		treesitter.TSMethod = { fg = ikigai.ikigai7_gui } -- For method calls and definitions.
 		treesitter.TSFuncBuiltin = { fg = ikigai.ikigai8_gui }
 		-- Namespaces and property accessors
@@ -267,7 +304,7 @@ theme.loadTreeSitter = function()
 		-- Conditionals
 		treesitter.TSConditional = { fg = ikigai.blue, style = "italic" } -- For keywords related to conditionnals.
 		-- Function names
-		treesitter.TSFunction = { fg = ikigai.yellow, style = "italic" } -- For fuction (calls and definitions).
+		treesitter.TSFunction = { fg = ikigai.fg, style = "italic" } -- For fuction (calls and definitions).
 		treesitter.TSMethod = { fg = ikigai.ikigai7_gui, style = "italic" } -- For method calls and definitions.
 		treesitter.TSFuncBuiltin = { fg = ikigai.ikigai8_gui, style = "italic" }
 		-- Namespaces and property accessors
