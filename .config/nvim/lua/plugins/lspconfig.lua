@@ -44,10 +44,10 @@ lspSymbol("Hint", "")
 lspSymbol("Warn", "")
 
 vim.diagnostic.config {
-   virtual_text = {
-      prefix = "",
-      spacing = 5,
-   },
+   -- virtual_text = {
+   --    prefix = "",
+   --    spacing = 5,
+   -- },
    virtual_text = false,
    signs = true,
    underline = true,
@@ -57,7 +57,7 @@ vim.diagnostic.config {
    }
 }
 
-vim.api.nvim_create_autocmd("InsertEnter", {
+vim.api.nvim_create_autocmd("CursorHold", {
 	callback = function()
 		if vim.lsp.buf.server_ready() then
 			vim.diagnostic.open_float()

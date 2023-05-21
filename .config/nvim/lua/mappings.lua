@@ -22,7 +22,7 @@ map('n', 'N', 'Nzz', opts)
 
 --clipboard related
 -- map('n', 'YY', 'ggVG"*y', opts)
-map('n', '<leader>yy', '%y*<CR>', opts)
+map('n', '<leader>yy', ':%y*<CR>', opts)
 map('v', '<leader>y', '"*y', opts)
 
 -- buffers

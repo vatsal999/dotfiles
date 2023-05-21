@@ -77,7 +77,7 @@ theme.loadEditor = function()
 
 	local editor = {
 		NormalFloat = { fg = ikigai.fg, bg = ikigai.brightbg }, -- normal text and background color
-		FloatBorder = { fg = ikigai.ikigai4_gui, bg = ikigai.float }, -- normal text and background color
+		FloatBorder = { fg = ikigai.greycomments, bg = ikigai.brightbg }, -- normal text and background color
 		ColorColumn = { fg = ikigai.none, bg = ikigai.darkbg }, --  used for the columns set with 'colorcolumn'
 		Conceal = { fg = ikigai.ikigai1_gui }, -- placeholder characters substituted for concealed text (see 'conceallevel')
 		Cursor = { fg = ikigai.ikigai4_gui, bg = ikigai.none, style = "reverse" }, -- the character under the cursor
@@ -506,7 +506,7 @@ theme.loadPlugins = function()
 
 		-- Indent Blankline
 		IndentBlanklineChar = { fg = ikigai.grey },
-		IndentBlanklineContextChar = { fg = ikigai.fg },
+		IndentBlanklineContextChar = { fg = ikigai.greycomments },
 
 		-- Statusline
 		-- StatusLineDull = { fg = ikigai.ikigai3_gui, bg = ikigai.ikigai1_gui },

@@ -1,6 +1,7 @@
 local opt = vim.opt
 local g = vim.g
 
+opt.cmdheight = 0 -- try this, may be unstable
 opt.errorbells = false
 opt.splitbelow = true
 opt.splitright = true
@@ -9,6 +10,7 @@ opt.swapfile = false
 opt.backup = false
 opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 opt.undofile = true
+opt.updatetime = 500
 
 opt.number = true
 opt.relativenumber = true
@@ -16,6 +18,7 @@ opt.cursorline = true
 opt.signcolumn = "yes"
 opt.showmode = false
 opt.hidden = true
+opt.clipboard = "unnamed" -- Sync with system clipboard
 
 opt.shiftwidth = 4
 opt.tabstop = 4
@@ -25,7 +28,10 @@ opt.wrap = false
 opt.hlsearch = false
 opt.incsearch = true
 opt.smartindent = true
+opt.ignorecase = true
+opt.smartcase = true -- Don't ignore case with capitals
 opt.expandtab = true
+
 
 opt.termguicolors = true
 opt.completeopt = "menu,menuone,noselect"
