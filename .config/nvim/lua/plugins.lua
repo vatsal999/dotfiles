@@ -29,10 +29,30 @@ require("lazy").setup({
           require "plugins.colorscheme"
       end
     },
-
+    {
+      "m4xshen/hardtime.nvim",
+      opts = {}
+    },
 
     {
+        "williamboman/mason.nvim",
+        -- build = ":MasonUpdate", -- :MasonUpdate updates registry contents
+        cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUninstall", "MasonUninstallAll", "MasonLog" },
+        config = function ()
+            require "plugins.masonlsp"
+        end
+    },
+    {
+        "williamboman/mason-lspconfig.nvim",
+        event = { "BufReadPre", "BufNewFile" },
+        dependencies = { "williamboman/mason.nvim" },
+        config = function() 
+            require "plugins.masonlsp"
+        end
+    },
+    {
       'neovim/nvim-lspconfig',
+      event = { "BufReadPre", "BufNewFile" },
       config = function ()
           require "plugins.lspconfig"
       end
@@ -87,10 +107,6 @@ require("lazy").setup({
   },
 
   {
-      'williamboman/nvim-lsp-installer',
-  },
-
-  {
       'nvim-telescope/telescope.nvim',
       dependencies = {{ "nvim-lua/popup.nvim" }, {"nvim-lua/plenary.nvim"}},
       cmd = "Telescope",
@@ -99,14 +115,14 @@ require("lazy").setup({
       end
   },
 
-  {
-      'nvim-lualine/lualine.nvim',
-      dependencies = {'kyazdani42/nvim-web-devicons', lazy = true},
-      config = function ()
-          require "plugins.lualine"
-      end
-
-  },
+  -- {
+  --     'nvim-lualine/lualine.nvim',
+  --     dependencies = {'kyazdani42/nvim-web-devicons', lazy = true},
+  --     config = function ()
+  --         require "plugins.lualine"
+  --     end
+  --
+  -- },
   {
       'akinsho/bufferline.nvim',
       dependencies = 'kyazdani42/nvim-web-devicons',

@@ -44,10 +44,10 @@ require("catppuccin").setup({
 
 -- setup must be called before loading
 vim.cmd.colorscheme "catppuccin"
+-- let g:gruvbox_material_transparent_background = 2
 vim.cmd[[
-let g:gruvbox_material_transparent_background = 2
 let g:gruvbox_material_background = "hard"
 let g:gruvbox_material_foreground = "original"
 let g:ikigai_italic = "false"
-colorscheme catppuccin-mocha
+colorscheme ikigai
 ]]

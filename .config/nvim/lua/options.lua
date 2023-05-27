@@ -18,7 +18,7 @@ opt.cursorline = true
 opt.signcolumn = "yes"
 opt.showmode = false
 opt.hidden = true
-opt.clipboard = "unnamed" -- Sync with system clipboard
+opt.clipboard = "unnamedplus" -- Sync with system clipboard
 
 opt.shiftwidth = 4
 opt.tabstop = 4
