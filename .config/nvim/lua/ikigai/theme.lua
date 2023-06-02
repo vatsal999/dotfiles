@@ -112,7 +112,7 @@ theme.loadEditor = function()
 		SpellLocal = { fg = ikigai.ikigai8_gui, bg = ikigai.none, style = "italic,undercurl" },
 		SpellRare = { fg = ikigai.ikigai9_gui, bg = ikigai.none, style = "italic,undercurl" },
 
-		StatusLine = { fg = ikigai.fg, bg = ikigai.bg },
+		StatusLine = { fg = ikigai.greycomments, bg = ikigai.bg },
 		StatusLineNC = { fg = ikigai.greycomments, bg = ikigai.darkbg },
 		StatusLineTerm = { fg = ikigai.ikigai4_gui, bg = ikigai.ikigai2_gui },
 		StatusLineTermNC = { fg = ikigai.ikigai4_gui, bg = ikigai.ikigai1_gui },

@@ -43,7 +43,7 @@ local function capabilities(name)
   return capability
 end
 
-local on_attach = function(client,bufnr) 
+local on_attach = function(client,bufnr)
     -- local function buf_set_keymap(...)
     --     vim.api.nvim_buf_set_keymap(bufnr, ...)
     -- end
@@ -73,40 +73,6 @@ local on_attach = function(client,bufnr)
       vim.lsp.buf.format { async = true }
     end, opts)
 end
--- vim.api.nvim_create_autocmd('LspAttach', {
---   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
---   callback = function(ev)
---     -- Enable completion triggered by <c-x><c-o>
---     vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
---
---     -- Buffer local mappings.
---     -- See `:help vim.lsp.*` for documentation on any of the below functions
---     local opts = { buffer = ev.buf }
---     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
---     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
---     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
---     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
---     vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
---     -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
---     -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
---     -- vim.keymap.set('n', '<space>wl', function()
---     --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
---     -- end, opts)
---     vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
---     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
---     vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
---     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
---     vim.keymap.set('n', '<space>f', function()
---       vim.lsp.buf.format { async = true }
---     end, opts)
---   end,
--- })
-
--- nvim-lsp-installer
--- lsp_installer.on_server_ready(function(server)
---    local opts = {}
---    server:setup(opts)
--- end)
 
 -- -- replace the default lsp diagnostic symbols
 
@@ -122,11 +88,11 @@ lspSymbol("Hint", "")
 lspSymbol("Warn", "")
 
 vim.diagnostic.config {
-   -- virtual_text = {
-   --    prefix = "",
-   --    spacing = 5,
-   -- },
-   virtual_text = false,
+   virtual_text = {
+      prefix = "",
+      spacing = 5,
+   },
+   -- virtual_text = true,
    signs = true,
    underline = true,
    update_in_insert = false,
@@ -135,13 +101,14 @@ vim.diagnostic.config {
    }
 }
 
-vim.api.nvim_create_autocmd("CursorHold", {
-	callback = function()
-		if vim.lsp.buf.server_ready() then
-			vim.diagnostic.open_float()
-		end
-	end,
-})
+-- FIX: lsp.buf.server_ready is to be deprecated. fix this
+-- vim.api.nvim_create_autocmd("CursorHold", {
+-- 	callback = function()
+-- 		if vim.lsp.buf.server_ready() then
+-- 			vim.diagnostic.open_float()
+-- 		end
+-- 	end,
+-- })
 
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
@@ -164,6 +131,16 @@ require("lspconfig").lua_ls.setup ({
 })
 
 require("lspconfig").clangd.setup ({
+  on_attach = on_attach,
+  capabilities = capabilities(name),
+})
+
+-- require("lspconfig").csslsp.setup ({
+--   on_attach = on_attach,
+--   capabilities = capabilities(name),
+-- })
+
+require("lspconfig").quick_lint_js.setup ({
   on_attach = on_attach,
   capabilities = capabilities(name),
 })

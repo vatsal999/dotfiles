@@ -1,7 +1,7 @@
 local opt = vim.opt
 local g = vim.g
 
-opt.cmdheight = 0 -- try this, may be unstable
+--opt.cmdheight = 0 -- try this, may be unstable
 opt.errorbells = false
 opt.splitbelow = true
 opt.splitright = true

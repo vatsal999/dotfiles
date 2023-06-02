@@ -58,6 +58,6 @@ require("true-zen").setup
 			font = "+3"
 		},
 		twilight = false, -- enable twilight (ataraxis)
-        lualine = true,
+        lualine = false,
 	},
 }
