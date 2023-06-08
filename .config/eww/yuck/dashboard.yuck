@@ -1,0 +1,67 @@
+(defwidget dash []
+    (box :class "dashwindow" :space-evenly "false" :orientation "v"
+        (box :class "datetime" :orientation "v" :space-evenly "false"
+            (label :class "time" :halign "center" :text "${time_24h}")
+            (label :class "date" :halign "center" :text "${mydate}")
+        )
+        (box :class "sliders" :orientation "v" :space-evenly "false"
+            (box :class "volume-slider" :orientation "h" :space-evenly "false"
+                (label :class "slider-icon" :text "󰕾")
+                (scale
+                    :min 0
+                    :max 101
+                    :value volume
+                    :orientation "h"
+                    :tooltip "VOL: ${volume}%"
+                    :onchange "amixer -D pulse sset Master {}%"
+                )
+            )
+            (box :class "brightness-slider" :orientation "h" :space-evenly "false"
+                (label :class "slider-icon" :text "󰃠")
+                (scale
+                    :min 1
+                    :max 101
+                    :value brightness
+                    :orientation "h"
+                    :tooltip "BRI: ${brightness}%"
+                    :onchange "brightnessctl set {}%"
+                )
+            )
+        )
+        (box :class "player" :space-evenly "false" :orientation "h"
+            (box :class "song-info" :orientation "v" :space-evenly "false" :hexpand "false" :vexpand "false"
+                (label :class "song-title" :halign "start" :limit-width 25 :text "${song_title}")
+                (label :class "song-artist" :halign "start" :limit-width 25 :text "${song_artist}")
+            )
+            (box :class "player-controls" :orientation "v"
+                (button :class "previous-button" :onclick "playerctl previous" "󰒮")
+                (button :class "toggle-button" :onclick "playerctl play-pause" player_status)
+                (button :class "next-button" :onclick "playerctl next" "󰒭")
+            )
+        )
+        (box :class "toggles" :space-evenly "false" :orientation "v"
+            (box :class "row1" :orientation "h" :space-evenly "false"
+                (button :class "wifi btn" :onclick "playerctl play-pause" "󰕾")
+                (button :class "bt btn" :onclick "playerctl play-pause" "󰕾")
+                (button :class "vol btn" :onclick "playerctl play-pause" "󰕾")
+            )
+            (box :class "row2" :orientation "h" :space-evenly "false"
+                (button :class "ss btn" :onclick "screenshot ssfull" "")
+                (button :class "rec btn" :onclick "playerctl play-pause" "")
+                (button :class "night btn" :halign "center" :vlign "center" :onclick "playerctl play-pause" "󰛨")
+            )
+        )
+    )
+)
+
+(defwindow dash
+    :geometry (geometry :x "-1%"
+                        :y "0%"
+                        :width "20%"
+                        :height "80%"
+                        :anchor "right center")
+    :windowtype "dock"
+    :stacking "fg"
+    :wm-ignore "true"
+    (dash)
+)

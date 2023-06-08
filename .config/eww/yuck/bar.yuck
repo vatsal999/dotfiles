@@ -1,0 +1,143 @@
+(defwidget top[]
+    (box :orientation "v"
+         :valign "start"
+         :space-evenly true
+         :spacing "5"
+         (bar-workspaces)
+    )
+)
+
+(defvar is_calendar_open true)
+(defwidget middle[]
+    (eventbox
+        ;; :onhover {is_calendar_open ? "eww update is_calendar_open=false" : "eww update is_calendar_open=true"}
+        ;;:onhover "eww update is_calendar_open=true"
+        ;;:onhoverlost "eww update is_calendar_open=false"
+        :onclick "eww open --toggle cal"
+        (box :orientation "v"
+             :valign "center"
+             :space-evenly true
+             :spacing "5"
+             :class "time-bar"
+            (label :class "hour" :text "${hour_12h}")
+            (label :class "minute" :text "${min_12h}")
+            (label :class "meridiem" :text "${meridiem}")
+        )
+    )
+)
+
+(defwidget cal[]
+    (revealer 
+        :reveal is_calendar_open
+        :transition "slide-right"
+        :duration "500ms"
+        (calendar)
+    )
+)
+
+(defwidget bottom[]
+    (box :orientation "v"
+         :valign "end"
+         :space-evenly false
+         :spacing "5"
+         (bar-volume)
+         (bar-battery)
+    )
+)
+
+(deflisten wsScript "~/.config/eww/scripts/workspaces.sh")
+(defwidget bar-workspaces []
+    (box :class "workspaces" :valign "center"
+        (literal :content wsScript)
+    )
+)
+
+(defwidget sysprogress [data icon css tip] (box 
+    :class "${css}" (circular-progress
+    :class css
+    :value data
+    :start-at 75
+    :clockwise false
+    :thickness 7
+    :tooltip tip
+    (overlay
+        :valign "center"
+        (label :class "icon" :text icon)
+    )
+)))
+
+(defwidget bar-battery []
+    (sysprogress
+        :css "bar-battery "
+        :tip "Power"
+        :data {EWW_BATTERY.status}
+        :icon "󱐋"
+    )
+)
+
+(defwidget bar-volume []
+    (eventbox
+        :onhover "eww update vol-rev=true"
+        :onhoverlost "eww update vol-rev=false"
+        (box :class "volume-bar" :space-evenly "false" :orientation "v" :tooltip "${volume}%"
+            (revealer
+                :transition "slide-right"
+                :reveal vol-rev
+                :duration "500ms"
+                (scale
+                    :flipped "true"
+                    :min 0
+                    :max 101
+                    :value volume
+                    :orientation "v"
+                    :tooltip "VOL: ${volume}"
+                    :onchange "amixer -D pulse sset Master {}%"
+                )
+            )
+            (label :class "slider-icon" :text "󰕾")
+        )
+    )
+    
+)
+(defwidget vbar []
+    (centerbox :class "barwindow" :orientation "v"
+        (box :class "top-modules"
+             :valign "start"
+             (top)
+        )
+        (box :class "middle-modules"
+             :valign "center"
+             (middle)
+        )
+        (box :class "bottom-modules"
+             :valign "end"
+             (bottom)
+        )
+    )
+)
+
+(defwindow cal
+    :geometry (geometry :x "60px"
+                        :y "0%"
+                        :width "20px"
+                        :height "20%"
+                        :anchor "left center")
+    :focusable false
+    :windowtype "dock"
+    :wm-ignore true
+    :stacking "fg"
+    (cal)
+)
+
+(defwindow vbar
+    :geometry (geometry :x "0%"
+                        :y "0%"
+                        :width "40px"
+                        :height "100%"
+                        :anchor "left top")
+    :reserve (struts :distance "40px" :side "left")
+    :focusable false
+    :windowtype "dock"
+    :stacking "bg"
+    (vbar)
+)

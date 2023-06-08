@@ -1,4 +1,14 @@
+(defvar vol-rev false)
 ;; DATE VARS 
+(defpoll hour_12h :interval "1s" "date +%I")
+(defpoll min_12h  :interval "1s" "date +%M")
+(defpoll sec_12h  :interval "1s" "date +%s")
+(defpoll meridiem :interval "5s" "date '+%p'")
+
+(defpoll hour_24h :interval "1s" "date +%H")
+(defpoll min_24h  :interval "1s" "date +%M")
+(defpoll sec_24h  :interval "1s" "date +%S")
+
 (defpoll time_24h :interval "5s"
 	"date '+%H:%M'")
 (defpoll time_12h :interval "5s"
@@ -97,3 +107,11 @@
 	"./scripts/getBluetooth.sh status")
 (defpoll bluetooth_supported :interval "1s"
 	"./scripts/getBluetooth.sh supported")
+
+;; UNSORTED VARS
+(defpoll layout_icon :interval "250ms"
+	"./scripts/bspLayout.sh icon")
+(defpoll airplane_mode_status :interval "1s"
+	"./scripts/dashActions.sh amstat")
+(defpoll uptime :interval "30s"
+	"./scripts/getUptime.sh")
