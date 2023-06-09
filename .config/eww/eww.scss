@@ -27,6 +27,39 @@ window {
     }
 }
 
+calendar {
+    font-size: 18px;
+    padding: 8px;
+    &.view {
+        background-color: $primary_bg;
+    }
+    &.button {
+        border-radius: 50%;
+        color: $grey;
+        &:hover {
+            color: $green;
+        }
+        &:disabled {
+            color: $red;
+        }
+    }
+    &.header {
+        border-radius: 10px;
+        //background-color: #1d2021;
+    }
+    &.highlight {
+        color: $grey;
+    }
+    &:selected {
+        color: $light_green;
+        font-weight: bold;
+        border-radius: 10px;
+    }
+    &:indeterminate {
+        color: $secondary_bg;
+    }
+}
+
 .time-bar {
     .hour{
         font-size: 18px;
@@ -44,7 +77,13 @@ window {
 
 .barwindow {
     background-color: #131313;
-    padding: 5px;
+    padding: 10px 0 10px 0;
+    .bottom-modules {
+        .power-btn {
+            font-size: 20px;
+            color: $light_red;
+        }
+    }
     .volume-bar {
         .slider-icon {
             font-size: 35px;

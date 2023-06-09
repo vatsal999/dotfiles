@@ -7,12 +7,8 @@
     )
 )
 
-(defvar is_calendar_open true)
 (defwidget middle[]
     (eventbox
-        ;; :onhover {is_calendar_open ? "eww update is_calendar_open=false" : "eww update is_calendar_open=true"}
-        ;;:onhover "eww update is_calendar_open=true"
-        ;;:onhoverlost "eww update is_calendar_open=false"
         :onclick "eww open --toggle cal"
         (box :orientation "v"
              :valign "center"
@@ -26,13 +22,12 @@
     )
 )
 
+;; updates calendar's date
+(defpoll date :interval "100s" :initial `{"d":"1","m":"1","y":"0"}`
+  `date '+{"d":"%d","m":"%m","y":"%Y"}'`)
+
 (defwidget cal[]
-    (revealer 
-        :reveal is_calendar_open
-        :transition "slide-right"
-        :duration "500ms"
-        (calendar)
-    )
+    (calendar :class "bar-calendar" :tooltip "${date.d}-${date.m}-${date.y}" :day {date.d} :month {date.m} :year {date.y})
 )
 
 (defwidget bottom[]
@@ -42,6 +37,7 @@
          :spacing "5"
          (bar-volume)
          (bar-battery)
+         (bar-power-btn)
     )
 )
 
@@ -72,6 +68,15 @@
         :tip "Power"
         :data {EWW_BATTERY.status}
         :icon "󱐋"
+    )
+)
+
+(defwidget bar-power-btn []
+    (eventbox
+        :onclick "~/.local/bin/powermenu"
+        (box :class "power-btn" :tooltip "Power Options"
+            (label :class "power-icon" :text "")
+        )
     )
 )
 
@@ -119,8 +124,8 @@
 (defwindow cal
     :geometry (geometry :x "60px"
                         :y "0%"
-                        :width "20px"
-                        :height "20%"
+                        :width "350px"
+                        :height "300px"
                         :anchor "left center")
     :focusable false
     :windowtype "dock"

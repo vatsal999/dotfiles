@@ -62,6 +62,7 @@
                         :anchor "right center")
     :windowtype "dock"
     :stacking "fg"
+    :focusable "true"
     :wm-ignore "true"
     (dash)
 )
