@@ -1,4 +1,9 @@
 (defwidget dash []
+        (box :orientation "h" :space-evenly "false" :style "background-color: #00000000" :halign "end" :class "dash-rev-class"
+    (revealer
+        :transition "slideleft"
+        :duration "500ms"
+        :reveal dash_rev
     (box :class "dashwindow" :space-evenly "false" :orientation "v"
         (box :class "datetime" :orientation "v" :space-evenly "false"
             (label :class "time" :halign "center" :text "${time_24h}")
@@ -40,27 +45,67 @@
             )
         )
         (box :class "toggles" :space-evenly "false" :orientation "v"
-            (box :class "row1" :orientation "h" :space-evenly "false"
-                (button :class "wifi btn" :onclick "playerctl play-pause" "󰕾")
-                (button :class "bt btn" :onclick "playerctl play-pause" "󰕾")
-                (button :class "vol btn" :onclick "playerctl play-pause" "󰕾")
+            (box :class "row1" :orientation "h" :space-evenly "true" :spacing "10"
+                    (eventbox
+                        :onrightclick "nm-connection-editor"
+                        :onclick "./scripts/getWifi.sh toggle"
+                        (box :orientation "v" :class "wifi toggle-btn ${wifi_status}" :tooltip "WIFI: ${wifi_status}" :space-evenly false
+                            (label :class "icon" :text "${wifi_icon}")
+                            (label :class "text" :limit-width 12 :text "${wifi_status}")
+                        )
+                    )
+                    (eventbox
+                        :onrightclick "blueman-manager"
+                        :onclick "./scripts/getBluetooth.sh toggle"
+                        (box :orientation "v" :class "bluetooth toggle-btn ${bluetooth_status}" :tooltip "BT: ${bluetooth_status}" :space-evenly false
+                            (label :class "icon" :text "${bluetooth_icon}")
+                            (label :class "text" :limit-width 12 :text "${bluetooth_status}")
+                        )
+                    )
+                    (eventbox
+                        :onrightclick "nm-connection-editor"
+                        (box :orientation "v" :class "focus toggle-btn OFF" :tooltip "${wifi_status}" :space-evenly false
+                            (label :class "icon" :text "")
+                            (label :class "text" :text "Focus")
+                        )
+                    )
             )
-            (box :class "row2" :orientation "h" :space-evenly "false"
-                (button :class "ss btn" :onclick "screenshot ssfull" "")
-                (button :class "rec btn" :onclick "playerctl play-pause" "")
-                (button :class "night btn" :halign "center" :vlign "center" :onclick "playerctl play-pause" "󰛨")
+            (box :class "row2" :orientation "h" :space-evenly "true" :spacing "10"
+                    (eventbox
+                        :onclick "screenshot ssfull"
+                        (box :orientation "v" :class "screenshot" :tooltip "${wifi_status}" :space-evenly false
+                            (label :class "icon" :text "󰆞")
+                            (label :class "text" :text "Screenshot")
+                        )
+                    )
+                    (eventbox
+                        :onrightclick "blueman-manager"
+                        (box :orientation "v" :class "screenrec" :tooltip "${wifi_status}" :space-evenly false
+                            (label :class "icon" :text "")
+                            (label :class "text" :text "ScreenRec")
+                        )
+                    )
+                    (eventbox
+                        :onclick "./scripts/getRedshift.sh toggle"
+                        (box :orientation "v" :class "night light" :tooltip "${wifi_status}" :space-evenly false
+                            (label :class "icon" :text "󱩌")
+                            (label :class "text" :text "Night Light")
+                        )
+                    )
             )
+        )
         )
     )
 )
+)
 
 (defwindow dash
-    :geometry (geometry :x "-1%"
+    :geometry (geometry :x "0%"
                         :y "0%"
                         :width "20%"
                         :height "80%"
                         :anchor "right center")
-    :windowtype "dock"
+    :windowtype "dialog"
     :stacking "fg"
     :focusable "true"
     :wm-ignore "true"

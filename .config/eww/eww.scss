@@ -81,7 +81,7 @@ calendar {
     .bottom-modules {
         .power-btn {
             font-size: 20px;
-            color: $light_red;
+            color: $red;
         }
     }
     .volume-bar {
@@ -237,16 +237,32 @@ calendar {
       min-height: 100px;
       min-width: 100px;
       font-family: $icon_font;
-      font-size: 25px;
-      .btn {
-        &:hover {
-            color: $red;
-        }
-        margin: 5px;
-        min-height: 70px;
-        min-width: 100px;
-        border-radius: 20px;
-        background-color: #131313;
+      .row1 {
+          margin-bottom: 20px;
+          .toggle-btn {
+              .icon {
+                  background-color: $grey;
+                  color: $primary_bg;
+              }
+          }
+          .OFF {
+              .icon{
+                  background-color: $primary_bg;
+                  color: $primary_fg;
+              }
+          }
+      }
+      .icon {
+          font-family: $icon_font;
+          font-size: 25px;
+          min-height: 50px;
+          background-color: $primary_bg;
+          border-radius: 10px;
+      }
+      .text {
+          font-family: $ui_font;
+          font-size: 12px;
+          margin-top: 10px;
       }
     }
 

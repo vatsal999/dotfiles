@@ -1,5 +1,8 @@
 (defvar vol-rev false)
-;; DATE VARS 
+(defvar dash_rev false)
+
+;; DATE
+
 (defpoll hour_12h :interval "1s" "date +%I")
 (defpoll min_12h  :interval "1s" "date +%M")
 (defpoll sec_12h  :interval "1s" "date +%s")
@@ -18,7 +21,8 @@
 (defpoll mydate :interval "24h"
 	"date '+%a %d %b %Y'")
 
-;; SYSTEM INFO VARS
+;; SYSTEM INFO
+
 (defpoll volume :interval "500ms"
 	"amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
 (defpoll volume_muted :interval "500ms"
@@ -78,27 +82,16 @@
 (defpoll calendar_year :interval "10h"
 	"date '+%Y'")
 
-;; UTILITY ROW VARS
-(defpoll network_status :interval "1s"
-	"./scripts/getNetwork.sh color")
-(defpoll network_icon :interval "1s"
-	"./scripts/getNetwork.sh icon")
-(defpoll network_name :interval "1s"
-	"./scripts/getNetwork.sh name")
-(defpoll network_name_truncated :interval "1s"
-	"./scripts/getNetwork.sh trname")
+(defpoll wifi_icon :interval "1s"
+	"./scripts/getWifi.sh icon")
+(defpoll wifi_status :interval "1s"
+	"./scripts/getWifi.sh status")
+
 (defpoll redshift_status :interval "1s"
-	"./scripts/getRedshift.sh color")
+	"./scripts/getRedshift.sh status")
+
 (defpoll dnd_status :interval "1s"
 	"./scripts/dashActions.sh dndstat")
-
-;; NOTIFICATION CENTER/POPUP VARS
-(defpoll dunst_history :interval "250ms" :run-while noticenter
-	"dunstctl history")
-(defpoll dunst_count :interval "250ms" :run-while noticenter
-	"dunstctl count history")
-(defpoll reveal_no_notification_text :interval "5m"
-	"./scripts/getNotificationCount.sh")
 
 ;; BLUETOOTH VARS
 (defpoll bluetooth_icon :interval "1s"
@@ -108,10 +101,8 @@
 (defpoll bluetooth_supported :interval "1s"
 	"./scripts/getBluetooth.sh supported")
 
-;; UNSORTED VARS
-(defpoll layout_icon :interval "250ms"
-	"./scripts/bspLayout.sh icon")
 (defpoll airplane_mode_status :interval "1s"
 	"./scripts/dashActions.sh amstat")
+
 (defpoll uptime :interval "30s"
 	"./scripts/getUptime.sh")
