@@ -6,15 +6,115 @@
 
 tooltip {
     background-color: $secondary_bg;
+    color: $primary_fg;
 }
 
 window {
-    color: #ffffff;
-    font-family: "Inter";
+    color: $primary_fg;
+    font-family: "Inter Medium";
+}
+
+.ws {
+    font-size: 16px;
+    .unoccupied {
+        color: $secondary_bg;
+    }
+    .occupied {
+        color: $grey;
+    }
+    .active {
+        color: $yellow;
+    }
+}
+
+calendar {
+    font-size: 18px;
+    padding: 8px;
+    &.view {
+        background-color: $primary_bg;
+    }
+    &.button {
+        border-radius: 50%;
+        color: $grey;
+        &:hover {
+            color: $green;
+        }
+        &:disabled {
+            color: $red;
+        }
+    }
+    &.header {
+        border-radius: 10px;
+        //background-color: #1d2021;
+    }
+    &.highlight {
+        color: $grey;
+    }
+    &:selected {
+        color: $light_green;
+        font-weight: bold;
+        border-radius: 10px;
+    }
+    &:indeterminate {
+        color: $secondary_bg;
+    }
+}
+
+.time-bar {
+    .hour{
+        font-size: 18px;
+        // font-weight: bold;
+    }
+    .minute{
+        font-size: 18px;
+        // font-weight: bold;
+    }
+    .meridiem{
+        color: $grey;
+        font-size: 16px;
+    }
+}
+
+.barwindow {
+    background-color: #131313;
+    padding: 10px 0 10px 0;
+    .bottom-modules {
+        .power-btn {
+            font-size: 20px;
+            color: $red;
+        }
+    }
+    .volume-bar {
+        .slider-icon {
+            font-size: 35px;
+            color: $light_blue;
+        }
+        scale {
+            marks {
+                mark {
+                    indicator {
+                        min-height: 10px;
+                        min-width: 10px;
+                    }
+                }
+            }
+            trough {
+                min-width: 10px;
+                min-height: 100px;
+                border-radius: 20px;
+                background-color: $secondary_bg;
+
+                highlight {
+                    background-image: linear-gradient(to top, $blue, $light_blue);
+                    border-radius: 20px;
+                }
+            }
+        }
+    }
 }
 
 .dashwindow {
-    background-color: #1d2021;
+    background-color: #161616;
     padding: 10px;
     border-radius: 20px;
     .datetime {
@@ -30,14 +130,52 @@ window {
             font-size: 20px;
         }
     }
+    .player {
+        background-color: #131313;
+        border-radius: 20px;
+        min-height: 130px;
+        padding: 1em;
+        .song-info {
+            font-family: $ui_font;
+            min-width: 300px;
+            .song-title {
+                font-size: 18px;
+                padding: 0 0 5px 0;
+            }
+            .song-artist {
+                font-size: 15px;
+                color: #808080;
+            }
+        }
+        .player-controls {
+            font-family: $icon_font;
+            margin-left: 10px;
+            button {
+                &:hover {
+                    color: $yellow;
+                }
+            }
+            .previous-button {
+                font-size: 30px;
+            }
+            .toggle-button {
+                font-size: 20px;
+                padding-right: 5px;
+            }
+            .next-button {
+                font-size: 30px;
+            }
+        }
+
+    }
     .sliders {
-        margin: 50px 0 0 20px;
+        margin: 50px 0 0 15px;
         .volume-slider {
             .slider-icon {
                 padding: 0 10px 0 0;
                 margin:  0 10px 0 0;
                 font-family: $icon_font;
-                font-size: 25px;
+                font-size: 20px;
             }
 
             scale {
@@ -50,18 +188,82 @@ window {
                     }
                 }
                 trough {
-                    min-width: 400px;
+                    min-width: 300px;
                     min-height: 15px;
                     border-radius: 20px;
                     background-color: $secondary_bg;
 
                     highlight {
-                        background-image: linear-gradient(to right, $red, $light_red);
+                        background-image: linear-gradient(to right, $blue, $light_blue);
                         border-radius: 20px;
                     }
                 }
             }
         }
+        .brightness-slider {
+            .slider-icon {
+                padding: 0 10px 0 0;
+                margin:  0 10px 0 0;
+                font-family: $icon_font;
+                font-size: 20px;
+            }
+
+            scale {
+                marks {
+                    mark {
+                        indicator {
+                            min-height: 10px;
+                            min-width: 10px;
+                        }
+                    }
+                }
+                trough {
+                    min-width: 300px;
+                    min-height: 15px;
+                    border-radius: 20px;
+                    background-color: $secondary_bg;
+
+                    highlight {
+                        background-image: linear-gradient(to right, $yellow, $light_yellow);
+                        border-radius: 20px;
+                    }
+                }
+            }
+        }
+    }
+
+    .toggles{
+      margin: 10px;
+      min-height: 100px;
+      min-width: 100px;
+      font-family: $icon_font;
+      .row1 {
+          margin-bottom: 20px;
+          .toggle-btn {
+              .icon {
+                  background-color: $grey;
+                  color: $primary_bg;
+              }
+          }
+          .OFF {
+              .icon{
+                  background-color: $primary_bg;
+                  color: $primary_fg;
+              }
+          }
+      }
+      .icon {
+          font-family: $icon_font;
+          font-size: 25px;
+          min-height: 50px;
+          background-color: $primary_bg;
+          border-radius: 10px;
+      }
+      .text {
+          font-family: $ui_font;
+          font-size: 12px;
+          margin-top: 10px;
+      }
     }
 
 }

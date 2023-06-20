@@ -1,0 +1,113 @@
+(defwidget dash []
+        (box :orientation "h" :space-evenly "false" :style "background-color: #00000000" :halign "end" :class "dash-rev-class"
+    (revealer
+        :transition "slideleft"
+        :duration "500ms"
+        :reveal dash_rev
+    (box :class "dashwindow" :space-evenly "false" :orientation "v"
+        (box :class "datetime" :orientation "v" :space-evenly "false"
+            (label :class "time" :halign "center" :text "${time_24h}")
+            (label :class "date" :halign "center" :text "${mydate}")
+        )
+        (box :class "sliders" :orientation "v" :space-evenly "false"
+            (box :class "volume-slider" :orientation "h" :space-evenly "false"
+                (label :class "slider-icon" :text "󰕾")
+                (scale
+                    :min 0
+                    :max 101
+                    :value volume
+                    :orientation "h"
+                    :tooltip "VOL: ${volume}%"
+                    :onchange "amixer -D pulse sset Master {}%"
+                )
+            )
+            (box :class "brightness-slider" :orientation "h" :space-evenly "false"
+                (label :class "slider-icon" :text "󰃠")
+                (scale
+                    :min 1
+                    :max 101
+                    :value brightness
+                    :orientation "h"
+                    :tooltip "BRI: ${brightness}%"
+                    :onchange "brightnessctl set {}%"
+                )
+            )
+        )
+        (box :class "player" :space-evenly "false" :orientation "h"
+            (box :class "song-info" :orientation "v" :space-evenly "false" :hexpand "false" :vexpand "false"
+                (label :class "song-title" :halign "start" :limit-width 25 :text "${song_title}")
+                (label :class "song-artist" :halign "start" :limit-width 25 :text "${song_artist}")
+            )
+            (box :class "player-controls" :orientation "v"
+                (button :class "previous-button" :onclick "playerctl previous" "󰒮")
+                (button :class "toggle-button" :onclick "playerctl play-pause" player_status)
+                (button :class "next-button" :onclick "playerctl next" "󰒭")
+            )
+        )
+        (box :class "toggles" :space-evenly "false" :orientation "v"
+            (box :class "row1" :orientation "h" :space-evenly "true" :spacing "10"
+                    (eventbox
+                        :onrightclick "nm-connection-editor"
+                        :onclick "./scripts/getWifi.sh toggle"
+                        (box :orientation "v" :class "wifi toggle-btn ${wifi_status}" :tooltip "WIFI: ${wifi_status}" :space-evenly false
+                            (label :class "icon" :text "${wifi_icon}")
+                            (label :class "text" :limit-width 12 :text "${wifi_status}")
+                        )
+                    )
+                    (eventbox
+                        :onrightclick "blueman-manager"
+                        :onclick "./scripts/getBluetooth.sh toggle"
+                        (box :orientation "v" :class "bluetooth toggle-btn ${bluetooth_status}" :tooltip "BT: ${bluetooth_status}" :space-evenly false
+                            (label :class "icon" :text "${bluetooth_icon}")
+                            (label :class "text" :limit-width 12 :text "${bluetooth_status}")
+                        )
+                    )
+                    (eventbox
+                        :onrightclick "nm-connection-editor"
+                        (box :orientation "v" :class "focus toggle-btn OFF" :tooltip "${wifi_status}" :space-evenly false
+                            (label :class "icon" :text "")
+                            (label :class "text" :text "Focus")
+                        )
+                    )
+            )
+            (box :class "row2" :orientation "h" :space-evenly "true" :spacing "10"
+                    (eventbox
+                        :onclick "screenshot ssfull"
+                        (box :orientation "v" :class "screenshot" :tooltip "${wifi_status}" :space-evenly false
+                            (label :class "icon" :text "󰆞")
+                            (label :class "text" :text "Screenshot")
+                        )
+                    )
+                    (eventbox
+                        :onrightclick "blueman-manager"
+                        (box :orientation "v" :class "screenrec" :tooltip "${wifi_status}" :space-evenly false
+                            (label :class "icon" :text "")
+                            (label :class "text" :text "ScreenRec")
+                        )
+                    )
+                    (eventbox
+                        :onclick "./scripts/getRedshift.sh toggle"
+                        (box :orientation "v" :class "night light" :tooltip "${wifi_status}" :space-evenly false
+                            (label :class "icon" :text "󱩌")
+                            (label :class "text" :text "Night Light")
+                        )
+                    )
+            )
+        )
+        )
+    )
+)
+)
+
+(defwindow dash
+    :geometry (geometry :x "0%"
+                        :y "0%"
+                        :width "20%"
+                        :height "80%"
+                        :anchor "right center")
+    :windowtype "dialog"
+    :stacking "fg"
+    :focusable "true"
+    :wm-ignore "true"
+    (dash)
+)
