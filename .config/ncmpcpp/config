@@ -214,26 +214,31 @@ message_delay_time = 1
 ## Note: colors can be nested.
 ##
 #
-song_list_format = "$(254)%t$R $(256)$5 %a$8"
-song_status_format = "$5%t"
+song_status_format = "$4%t"
 song_library_format = {{%a - %t} (%b)}|{%f}
+#song_list_format = "$8{%t}|{%f}$9 $R$(238)%a$9"
+song_list_format = "{%t}|{%f}$R{%a}"
+now_playing_prefix = "$b$4"
+now_playing_suffix = "$/b$9"
+
 #
 #alternative_header_first_line_format = $b$1$aqqu$/a$9 {%t}|{%f} $1$atqq$/a$9$/b
 #
 #alternative_header_second_line_format = {{$4$b%a$/b$9}{ - $7%b$9}{ ($4%y$9)}}|{%D}
 #
-current_item_prefix = "$b$8| "
-current_item_suffix = "$/b$5"
-#current_item_inactive_column_prefix = $(white)$r
-#current_item_inactive_column_suffix = $/r$(end)
-now_playing_prefix = "$b$5  "
-now_playing_suffix = "$/b$5"
+#
+#current_item_prefix = "$b$8| "
+#current_item_suffix = "$/b$4"
+# current_item_inactive_column_prefix = $(white)$r
+# current_item_inactive_column_suffix = $/r$(end)
+# now_playing_prefix = "$4$b  "
+# now_playing_suffix = "$/b$9"
 #
 #browser_playlist_prefix = "$2playlist$9 "
 #
-#selected_item_prefix = $6
+selected_item_prefix = $6
 #
-#selected_item_suffix = $9
+selected_item_suffix = $9
 #
 #modified_item_prefix = $3> $9
 #
@@ -346,7 +351,7 @@ progressbar_look = "▂▂▂"
 #
 ## Available values: classic, alternative.
 ##
-user_interface = "classic"
+user_interface = "alternative"
 #
 #data_fetching_delay = yes
 #
@@ -400,6 +405,8 @@ allow_for_physical_item_deletion = "no"
 ## lyrics, last_fm.
 ##
 #screen_switcher_mode = playlist, browser
+
+lyrics_fetchers = justsomelyrics, jahlyrics, plyrics, azlyrics 
 #
 ##
 ## Note: You can define startup screen by choosing screen from the list above.
@@ -552,9 +559,9 @@ main_window_color = "white"
 #color2 = green
 
 progressbar_color = "black"
-progressbar_elapsed_color = "blue"
+progressbar_elapsed_color = "yellow"
 #statusbar_color = default
-#statusbar_time_color = default:b
+statusbar_time_color = "242"
 #player_state_color = default:b
 #alternative_ui_separator_color = black:b
 #window_border_color = green
