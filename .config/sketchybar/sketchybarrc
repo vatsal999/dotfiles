@@ -1,0 +1,46 @@
+#!/usr/bin/env sh
+
+source "$HOME/.config/sketchybar/colors.sh"
+
+PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
+MODULES_DIR="$HOME/.config/sketchybar/modules"
+
+##### Bar Appearance #####
+sketchybar --bar height=26        \
+                 blur_radius=0   \
+                 shadow=on      \
+                 sticky=on      \
+                 position=top     \
+                 padding_left=10  \
+                 padding_right=10 \
+                 color=$BG
+
+##### Changing Defaults #####
+sketchybar --default updates=when_shown                    \
+                     drawing=on                            \
+                     icon.font="SFMono Nerd Font:Bold:13.0"  \
+                     icon.color=$FG                 \
+                     icon.highlight_color=0xffE48FA8        \
+                     label.font="Inter:Bold:12.0" \
+                     label.color=$FG                \
+                     label.padding_right=10                 \
+                     label.padding_left=10                  \
+                     icon.padding_left=10                   \
+                     icon.padding_right=0
+
+# LEFT
+source "$MODULES_DIR/spaces.sh"
+#source "$MODULES_DIR/window_title.sh"
+
+# CENTER
+source "$MODULES_DIR/time.sh"
+
+# RIGHT
+source "$MODULES_DIR/date.sh"
+source "$MODULES_DIR/battery.sh"
+#source "$MODULES_DIR/wifi.sh"
+source "$MODULES_DIR/volume.sh"
+source "$MODULES_DIR/input.sh"
+
+sketchybar --update
+echo "sketchybar configuration loaded.."

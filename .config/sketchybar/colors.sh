@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+FG=0xffebdbb2
+BG=0xff1d2021
+
+RED=0xfffb4934
+GREEN=0xffb8bb26
+YELLOW=0xfffabd2f
+BLUE=0xff83a598
+MAGENTA=0xffd3869b
+CYAN=0xff8ec07c
+
+GRAYDARK=0xff282828
+GRAY=0xff504946
