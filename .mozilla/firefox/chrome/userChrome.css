@@ -1,5 +1,5 @@
 :root {
-    --toolbar-bgcolor: #1d2021;
+    --toolbar-bgcolor: #282828;
     --sidebar-min-width: 33px;
     --sidebar-visible-width: 300px;
     --toolbarbutton-border-radius: 0 !important;
@@ -19,12 +19,12 @@
   > .tab-stack
   > .tab-background[selected='true'] {
   background-image: none !important;
-  background-color: #1d2021 !important;
+  background-color: #131313 !important;
 }
 
 /* Inactive tabs color */
 #navigator-toolbox {
-  background-color: #161616 !important;
+  background-color: #1d2021 !important;
 }
 
 #tabbrowser-tabs[haspinnedtabs]:not([positionpinnedtabs])
@@ -61,7 +61,7 @@
 }
 
 #nav-bar {
-    background-color: #1D2021 !important;
+    background-color: #131313 !important;
     background-image: none !important;
 }
 /* center urbbar text */
@@ -69,11 +69,11 @@
 #urlbar:not([focused]) .urlbar-input{ text-align: center !important; }
 
 #urlbar-input-container {
-  background-color: #1D2021 !important;
+  background-color: #131313 !important;
   border: 1px solid rgba(0, 0, 0, 0) !important;
 }
 #urlbar-background{
-    background-color: #1D2021 !important;
+    background-color: #131313 !important;
     border: 0px solid rgba(0,0,0,0) !important;
 }
 
